@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'social_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+       'NAME': 'AgendaControlMedico',
+       'USER': 'postgres',
+       'PASSWORD': 'acm',
+       'HOST': '',
+       'PORT': '2000',
     }
 }
 
