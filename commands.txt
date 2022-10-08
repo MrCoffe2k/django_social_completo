@@ -1,0 +1,8 @@
+git config --global user.email "correo@example.com"     //En una terminal vacia se logea con un correo y un nombre antes de empezar cualquier cosa
+git config --global user.name "Nombre"
+
+python -m venv .\VENV-SOCIAL		//Esto es para crear el entorno virtual con su nombre
+.\VENV-SOCIAL\Scripts\activate	//Esto es para activar el entorno virtual y ejecutar el pip install o sacar los requerimientos
+pip install -r requirements.txt	//Esto es para instalar los requerimientos del entorno virtual, este archivo debe estar en la raíz de la carpeta del proyecto
+
+pip freeze > requirements.txt		//Esto es para crear los requerimientos del entrono virtual donde empezó el proyecto
