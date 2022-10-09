@@ -76,7 +76,6 @@ class Especialidades(models.Model):
 	class Meta:
 		verbose_name_plural = 'Especialidades'
 
-	
 
 class Especialistas(models.Model):
 	idEspecialista = models.IntegerField(primary_key=True)
