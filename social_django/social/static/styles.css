@@ -1,1 +1,48 @@
 /*Nuevo css en donde se tiene que especificar el estilo y en donde se formaria*/
+
+body { /*Diseño del cuerpo:  color de fondo asi como las medidas y el margen*/
+    
+    background-color: #099E81;
+    background-attachment: fixed;
+	background-size: 100%;
+	margin: auto;
+  }
+
+  p.title{ /*Diseño de los titulos:  tipo, tamaño y color de letras, y la alineacion del texto*/
+	font-family: "Indie Flower";
+	font-size: 400%;
+	color: #000000;
+	text-align: center;
+	
+}
+
+p.cuerpo{  /*Diseño de los parrafos en el proyecto:  tipo, tamaño y color de letras, y la alineacion del texto*/
+	font-family: "Source Code Pro";
+	font-size: 120%;
+	font-weight: 500;
+	color: black;
+	text-align: justify;
+}
+
+div.Themes{ /*Diseño de los div parra los titulos*/
+	margin: 0;
+	padding: 0;
+}
+
+div.textos{ /*Diseño div para texto:  margen, color de fonto y alineacion del texto*/
+	margin: 50px;
+	padding: 40px;
+	background-color: rgba(245, 245, 245, 0.9);
+	text-align: center;
+}
+.button { /*Diseño de botones: color de fondo del boton, borde color, 
+            alineacion del texto, el despliegue y el tamaño del texto  */
+    background-color: #ffffff; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
