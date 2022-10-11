@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import UserRegisterForm, PostForm
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth.models import  BaseUserManager
+
+User = settings.AUTH_USER_MODEL
 
 def feed(request):
 	posts = Post.objects.all()
@@ -15,8 +18,9 @@ def register(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
-			form.save()
-			username = form.cleaned_data['username']
+			user = form.save()
+			user.set_password(user.password)
+			username = form.cleaned_data['nombre']
 			messages.success(request, f'Usuario {username} creado')
 			return redirect('feed')
 	else:

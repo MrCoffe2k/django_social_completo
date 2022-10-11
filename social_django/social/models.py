@@ -1,13 +1,15 @@
+from email.policy import default
+from enum import unique
 from tabnanny import verbose
-from unittest.util import _MAX_LENGTH
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 
 
 
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	image = models.ImageField(default='batman.png')
 
 	def __str__(self):
@@ -16,16 +18,16 @@ class Profile(models.Model):
 	def following(self):
 		user_ids = Relationship.objects.filter(from_user=self.user)\
 								.values_list('to_user_id', flat=True)
-		return User.objects.filter(id__in=user_ids)
+		return settings.AUTH_USER_MODEL.objects.filter(id__in=user_ids)
 
 	def followers(self):
 		user_ids = Relationship.objects.filter(to_user=self.user)\
 								.values_list('from_user_id', flat=True)
-		return User.objects.filter(id__in=user_ids)
+		return settings.AUTH_USER_MODEL.objects.filter(id__in=user_ids)
 
 
 class Post(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
 	timestamp =  models.DateTimeField(default=timezone.now)
 	content = models.TextField()
 
@@ -37,8 +39,8 @@ class Post(models.Model):
 
 
 class Relationship(models.Model):
-	from_user = models.ForeignKey(User, related_name='relationships', on_delete=models.CASCADE)
-	to_user = models.ForeignKey(User, related_name='related_to', on_delete=models.CASCADE)
+	from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='relationships', on_delete=models.CASCADE)
+	to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='related_to', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return f'{self.from_user} to {self.to_user}'
@@ -49,20 +51,22 @@ class Relationship(models.Model):
 		]
 
 
-class Paciente(models.Model):
+class Paciente(AbstractBaseUser):
+	objects = BaseUserManager()
 	idPaciente= models.IntegerField(primary_key=True)
-	nombre = models.CharField(max_length=20)
+	nombre = models.CharField(max_length=20, unique=True,default="Nombre")
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno = models.CharField(max_length=20)
 	FechaNacimiento = models.DateField()
 	peso = models.FloatField()
 	altura = models.IntegerField()
-	telefono = models.IntegerField()
+	telefono = models.BigIntegerField()
 	correo = models.EmailField(max_length=40)
-	contrasena = models.CharField(max_length=15)
+
+	USERNAME_FIELD = 'nombre'
 
 	def __str__(self):
-		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo, self.contrasena}'
+		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
 
 	class Meta:
 		verbose_name_plural ="Pacientes"
@@ -84,7 +88,7 @@ class Especialistas(models.Model):
 	ApellidoMaterno= models.CharField(max_length=20)
 	cedulaMedica = models.IntegerField()
 	cedulaEspecialidad = models.IntegerField()
-	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
+	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
 
 	def __str__(self):
 		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.cedulaMedica, self.cedulaEspecialidad}'
@@ -95,7 +99,7 @@ class Horarios (models.Model):
 	id = models.IntegerField(primary_key=True)
 	dia = models.CharField(max_length=15)
 	hora = models.TimeField()
-	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,null=True)
+	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,null=True,related_name='hola2')
 
 	def __str__(self):
 		return f'{self.dia, self.hora}'
@@ -117,7 +121,7 @@ class Estudios(models.Model):
 class Peso(models.Model):
 	idPeso = models.IntegerField(primary_key=True)
 	peso = models.FloatField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='+')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='hola3')
 
 	def __str__(self):
 		return f'{self.peso}'
@@ -136,7 +140,7 @@ class Consultas(models.Model):
 class Altura(models.Model):
 	idAltura = models.IntegerField(primary_key=True)
 	altura = models.FloatField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola4')
 	
 	def __str__(self):
 		return f'{self.altura}'
@@ -148,8 +152,8 @@ class Altura(models.Model):
 class Laboratorio(models.Model):
 	idLaboratorio = models.IntegerField(primary_key=True)
 	idMuestra = models.IntegerField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE)
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
+	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
 
 	def __str__(self):
 		return f'{self.idMuestra}'
@@ -160,8 +164,8 @@ class Laboratorio(models.Model):
 class Citas(models.Model):
 	idCitas = models.IntegerField(primary_key=True)
 	fecha = models.DateField()
-	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE)
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,related_name='hola7')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola8')
 
 	def __str__(self):
 		return f'{self.fecha}'
@@ -171,7 +175,7 @@ class Citas(models.Model):
 class Resultados_Lab(models.Model):
 	idResultados = models.IntegerField(primary_key=True)
 	NombreEstudio = models.CharField(max_length=30)
-	idPaciente = models.ForeignKey(Paciente,on_delete=models.CASCADE, related_name='+')
+	idPaciente = models.ForeignKey(Paciente,on_delete=models.CASCADE, related_name='hola9')
 
 	def __str__(self):
 		return f'{self.NombreEstudio}'
@@ -179,3 +183,87 @@ class Resultados_Lab(models.Model):
 	class Meta:
 		verbose_name_plural = 'ResultadosDeLaboratorio'
 
+	class User(AbstractUser):
+		
+		email = models.EmailField(('email address'),unique=True,)
+	is_active = models.BooleanField(default=True)
+	staff = models.BooleanField(default=False) # a admin user; non super-user
+	admin = models.BooleanField(default=False) # a superuser
+	
+
+	USERNAME_FIELD = 'email'
+	REQUIRED_FIELDS = [] # Email & Password are required by default.
+
+	def get_full_name(self):
+	# The user is identified by their email address
+		return self.email
+
+	def get_short_name(self):
+	# The user is identified by their email address
+		return self.email
+
+	def __str__(self):
+		return self.email
+
+	def has_perm(self, perm, obj=None):
+		"Does the user have a specific permission?"
+	# Simplest possible answer: Yes, always
+		return True
+
+	def has_module_perms(self, app_label):
+		"Does the user have permissions to view the app `app_label`?"
+	# Simplest possible answer: Yes, always
+		return True
+
+	@property
+	def is_staff(self):
+		"Is the user a member of staff?"
+		return self.staff
+
+	@property
+	def is_admin(self):
+		"Is the user a admin member?"
+		return self.admin
+
+
+class UserManager(BaseUserManager):
+	def create_user(self, email, password=None):
+		"""
+	Creates and saves a User with the given email and password.
+	"""
+		if not email:
+			raise ValueError('Users must have an email address')
+		user = self.model(
+		email=self.normalize_email(email),
+		)
+
+		user.set_password(password)
+		user.save(using=self._db)
+		return user
+
+	def create_staffuser(self, email, password):
+		"""
+		Creates and saves a staff user with the given email and password.
+		"""
+		user = self.create_user(
+		email,
+		password=password,
+		)
+		user.staff = True
+		user.save(using=self._db)
+		return user
+
+	def create_superuser(self, email, password):
+		"""
+		Creates and saves a superuser with the given email and password.
+		"""
+		user = self.create_user(
+		email,
+		password=password,
+		)
+		user.staff = True
+		user.admin = True
+		user.save(using=self._db)
+		return user
+
+	# hook in the New Manager to our Model
