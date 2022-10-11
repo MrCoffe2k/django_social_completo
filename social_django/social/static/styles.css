@@ -1,6 +1,6 @@
 /*Nuevo css en donde se tiene que especificar el estilo y en donde se formaria*/
 
-body { /*Diseño del cuerpo:  color de fondo asi como las medidas y el margen*/
+body.pricipal { /*Diseño del cuerpo:  color de fondo asi como las medidas y el margen*/
     
     background-color: #099E81;
     background-attachment: fixed;
@@ -45,4 +45,12 @@ div.textos{ /*Diseño div para texto:  margen, color de fonto y alineacion del t
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+img.Logo{ /* Imagen del logo */
+	content: url("...");
+	width: 150px;
+	height: 150px;
+	display: block;
+	margin: auto;
 }
