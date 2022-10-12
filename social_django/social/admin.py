@@ -15,7 +15,6 @@ admin.site.register(Peso)
 admin.site.register(Consultas)
 admin.site.register(Altura)
 admin.site.register(Laboratorio)
-
 admin.site.register(Citas)
 
 

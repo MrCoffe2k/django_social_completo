@@ -59,7 +59,7 @@ class Paciente(AbstractBaseUser):
 	ApellidoMaterno = models.CharField(max_length=20)
 	FechaNacimiento = models.DateField()
 	peso = models.FloatField()
-	altura = models.IntegerField()
+	altura = models.FloatField()
 	telefono = models.BigIntegerField()
 	correo = models.EmailField(max_length=40)
 
@@ -89,6 +89,7 @@ class Especialistas(models.Model):
 	cedulaMedica = models.IntegerField()
 	cedulaEspecialidad = models.IntegerField()
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
+	password = models.CharField(max_length=20,null=False)
 
 	def __str__(self):
 		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.cedulaMedica, self.cedulaEspecialidad}'
