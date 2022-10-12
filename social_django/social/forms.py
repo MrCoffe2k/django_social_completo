@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from .models import Paciente, Post
 
 class UserRegisterForm(UserCreationForm):
-	idPaciente= forms.IntegerField()
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
@@ -18,10 +17,9 @@ class UserRegisterForm(UserCreationForm):
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
 
 
-
 	class Meta:
 		model = Paciente
-		fields =['idPaciente','nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2']
+		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2']
 		help_texts = {k:"" for k in fields}
 
 class PostForm(forms.ModelForm):
