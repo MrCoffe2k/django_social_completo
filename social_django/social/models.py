@@ -1,13 +1,15 @@
+from email.policy import default
+from enum import unique
 from tabnanny import verbose
-from unittest.util import _MAX_LENGTH
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 
 
 
 class Profile(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	image = models.ImageField(default='batman.png')
 
 	def __str__(self):
@@ -16,16 +18,16 @@ class Profile(models.Model):
 	def following(self):
 		user_ids = Relationship.objects.filter(from_user=self.user)\
 								.values_list('to_user_id', flat=True)
-		return User.objects.filter(id__in=user_ids)
+		return settings.AUTH_USER_MODEL.objects.filter(id__in=user_ids)
 
 	def followers(self):
 		user_ids = Relationship.objects.filter(to_user=self.user)\
 								.values_list('from_user_id', flat=True)
-		return User.objects.filter(id__in=user_ids)
+		return settings.AUTH_USER_MODEL.objects.filter(id__in=user_ids)
 
 
 class Post(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
 	timestamp =  models.DateTimeField(default=timezone.now)
 	content = models.TextField()
 
@@ -37,8 +39,8 @@ class Post(models.Model):
 
 
 class Relationship(models.Model):
-	from_user = models.ForeignKey(User, related_name='relationships', on_delete=models.CASCADE)
-	to_user = models.ForeignKey(User, related_name='related_to', on_delete=models.CASCADE)
+	from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='relationships', on_delete=models.CASCADE)
+	to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='related_to', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return f'{self.from_user} to {self.to_user}'
@@ -49,23 +51,50 @@ class Relationship(models.Model):
 		]
 
 
-class Paciente(models.Model):
-	idPaciente= models.IntegerField(primary_key=True)
-	nombre = models.CharField(max_length=20)
+class Paciente(AbstractUser):
+	idPaciente= models.AutoField(primary_key=True)
+	nombre = models.CharField(max_length=20, unique=True,default="Nombre")
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno = models.CharField(max_length=20)
-	FechaNacimiento = models.DateField()
-	peso = models.FloatField()
-	altura = models.IntegerField()
-	telefono = models.IntegerField()
-	correo = models.EmailField(max_length=40)
-	contrasena = models.CharField(max_length=15)
+	FechaNacimiento = models.DateField(null=True)
+	peso = models.FloatField(null=True)
+	altura = models.FloatField(null=True)
+	telefono = models.BigIntegerField(null=True)
+	correo = models.EmailField(max_length=40, null=True)
+	username = models.CharField(max_length=20, null=True)
 
-	def __str__(self):
-		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo, self.contrasena}'
-
+	USERNAME_FIELD = 'nombre'
+	REQUIRED_FIELDS = ['username']
 	class Meta:
 		verbose_name_plural ="Pacientes"
+
+	def __str__(self):
+		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
+
+	def create_user(self, nombre, password=None):
+		"""
+		Creates and saves a User with the given email and password.
+		"""
+		user = self.model(
+		nombre=self.save(nombre),
+		)
+
+		user.set_password(password)
+		user.save(using=self._db)
+		return user
+
+	def create_superuser(self, nombre, password):
+		"""
+		Creates and saves a superuser with the given email and password.
+		"""
+		user = self.create_user(
+		nombre,
+		password=password,
+		)
+		user.staff = True
+		user.admin = True
+		user.save(using=self._db)
+		return user
 class Especialidades(models.Model):
 	idEspecialidades = models.IntegerField(primary_key=True)
 	Nombre = models.CharField(max_length=30)
@@ -84,7 +113,8 @@ class Especialistas(models.Model):
 	ApellidoMaterno= models.CharField(max_length=20)
 	cedulaMedica = models.IntegerField()
 	cedulaEspecialidad = models.IntegerField()
-	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE)
+	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
+	password = models.CharField(max_length=20,null=False)
 
 	def __str__(self):
 		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.cedulaMedica, self.cedulaEspecialidad}'
@@ -95,7 +125,7 @@ class Horarios (models.Model):
 	id = models.IntegerField(primary_key=True)
 	dia = models.CharField(max_length=15)
 	hora = models.TimeField()
-	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,null=True)
+	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,null=True,related_name='hola2')
 
 	def __str__(self):
 		return f'{self.dia, self.hora}'
@@ -117,7 +147,7 @@ class Estudios(models.Model):
 class Peso(models.Model):
 	idPeso = models.IntegerField(primary_key=True)
 	peso = models.FloatField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='+')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='hola3')
 
 	def __str__(self):
 		return f'{self.peso}'
@@ -136,7 +166,7 @@ class Consultas(models.Model):
 class Altura(models.Model):
 	idAltura = models.IntegerField(primary_key=True)
 	altura = models.FloatField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola4')
 	
 	def __str__(self):
 		return f'{self.altura}'
@@ -148,8 +178,8 @@ class Altura(models.Model):
 class Laboratorio(models.Model):
 	idLaboratorio = models.IntegerField(primary_key=True)
 	idMuestra = models.IntegerField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
-	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE)
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
+	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
 
 	def __str__(self):
 		return f'{self.idMuestra}'
@@ -160,8 +190,8 @@ class Laboratorio(models.Model):
 class Citas(models.Model):
 	idCitas = models.IntegerField(primary_key=True)
 	fecha = models.DateField()
-	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE)
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,related_name='hola7')
+	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola8')
 
 	def __str__(self):
 		return f'{self.fecha}'
@@ -171,7 +201,7 @@ class Citas(models.Model):
 class Resultados_Lab(models.Model):
 	idResultados = models.IntegerField(primary_key=True)
 	NombreEstudio = models.CharField(max_length=30)
-	idPaciente = models.ForeignKey(Paciente,on_delete=models.CASCADE, related_name='+')
+	idPaciente = models.ForeignKey(Paciente,on_delete=models.CASCADE, related_name='hola9')
 
 	def __str__(self):
 		return f'{self.NombreEstudio}'

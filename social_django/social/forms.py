@@ -1,17 +1,26 @@
+from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post
+from .models import Paciente, Post
 
 class UserRegisterForm(UserCreationForm):
-	email = forms.EmailField()
+	nombre = forms.CharField(label='Nombre',max_length=20)
+	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
+	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
+	FechaNacimiento = forms.DateField(label='Fecha de Nacimiento')
+	peso = forms.FloatField(label='Peso')
+	altura = forms.FloatField(label='Altura',)
+	telefono = forms.IntegerField(label='Telefono',)
+	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-	password2 = forms.CharField(label='Confirma Contraseña', widget=forms.PasswordInput)
+	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
+
 
 	class Meta:
-		model = User
-		fields = ['username', 'email', 'password1', 'password2']
-		help_texts = {k:"" for k in fields }
+		model = Paciente
+		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2']
+		help_texts = {k:"" for k in fields}
 
 class PostForm(forms.ModelForm):
 	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': '¿Qué está pasando?'}), required=True)
