@@ -53,17 +53,17 @@ class Relationship(models.Model):
 
 class Paciente(AbstractUser):
 	idPaciente= models.AutoField(primary_key=True)
-	nombre = models.CharField(max_length=20, unique=True,default="Nombre")
+	nombre = models.CharField(max_length=20, default="Nombre")
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno = models.CharField(max_length=20)
 	FechaNacimiento = models.DateField(null=True)
 	peso = models.FloatField(null=True)
 	altura = models.FloatField(null=True)
 	telefono = models.BigIntegerField(null=True)
-	correo = models.EmailField(max_length=40, null=True)
+	correo = models.EmailField(max_length=40, null=True, unique=True)
 	username = models.CharField(max_length=20, null=True)
 
-	USERNAME_FIELD = 'nombre'
+	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
 	class Meta:
 		verbose_name_plural ="Pacientes"

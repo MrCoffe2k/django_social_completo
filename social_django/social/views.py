@@ -4,7 +4,8 @@ from .forms import UserRegisterForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.contrib.auth.models import  BaseUserManager
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 User = settings.AUTH_USER_MODEL
 
@@ -19,7 +20,7 @@ def register(request):
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			username = form.cleaned_data['nombre']
+			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
 			return redirect('feed')
 	else:
@@ -73,6 +74,10 @@ def unfollow(request, username):
 	rel.delete()
 	messages.success(request, f'Ya no sigues a {username}')
 	return redirect('feed')
+
+def gestionarusuario(request):
+	context = { 'form' : form }
+	return render(request, 'social/gestionarusuario.html')
 
 
 

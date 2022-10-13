@@ -1,3 +1,4 @@
+from cProfile import label
 from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -8,9 +9,9 @@ class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
-	FechaNacimiento = forms.DateField(label='Fecha de Nacimiento')
-	peso = forms.FloatField(label='Peso')
-	altura = forms.FloatField(label='Altura',)
+	FechaNacimiento = forms.DateField(label='Fecha de Nacimiento (Año-Mes-Dia)')
+	peso = forms.FloatField(label='Peso (Kg)')
+	altura = forms.FloatField(label='Altura (cm)',)
 	telefono = forms.IntegerField(label='Telefono',)
 	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
