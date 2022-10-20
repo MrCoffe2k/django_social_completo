@@ -6,3 +6,6 @@ python -m venv .\VENV-SOCIAL		//Esto es para crear el entorno virtual con su 
 pip install -r requirements.txt	//Esto es para instalar los requerimientos del entorno virtual, este archivo debe estar en la raíz de la carpeta del proyecto
 
 pip freeze > requirements.txt		//Esto es para crear los requerimientos del entrono virtual donde empezó el proyecto
+
+py manage.py makemigrations     //guardar los cambios
+py manage.py migrate        //subir los cambios a la base de datos
