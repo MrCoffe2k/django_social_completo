@@ -61,7 +61,6 @@ class Paciente(AbstractUser):
 	altura = models.FloatField(null=True)
 	telefono = models.BigIntegerField(null=True)
 	correo = models.EmailField(max_length=40, null=True, unique=True)
-	username = models.CharField(max_length=20, null=True)
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -69,7 +68,7 @@ class Paciente(AbstractUser):
 		verbose_name_plural ="Pacientes"
 
 	def __str__(self):
-		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
+		return f'{self.idPaciente,self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
 
 	def create_user(self, nombre, password=None):
 		"""
