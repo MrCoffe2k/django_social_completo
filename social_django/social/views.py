@@ -79,6 +79,18 @@ def gestionarusuario(request):
 	context = { 'form' : form }
 	return render(request, 'social/gestionarusuario.html')
 
+def menu(request):
+	context = {}
+	return render(request, 'social/menu.html')
+
+def citas(request):
+	context = {}
+	return render(request, 'social/citas.html')
+
+def citas(request):
+	context = {}
+	return render(request, 'social/establecerhorarios.html')
+
 
 
 

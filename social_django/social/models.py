@@ -97,10 +97,10 @@ class Paciente(AbstractUser):
 		return user
 class Especialidades(models.Model):
 	idEspecialidades = models.IntegerField(primary_key=True)
-	Nombre = models.CharField(max_length=30)
+	nombre = models.CharField(max_length=30)
 
 	def __str__(self):
-		return f'{self.Nombre}'
+		return f'{self.nombre}'
 
 	class Meta:
 		verbose_name_plural = 'Especialidades'

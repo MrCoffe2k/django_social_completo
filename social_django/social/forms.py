@@ -3,7 +3,7 @@ from dataclasses import fields
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Paciente, Post
+from .models import *
 
 class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
@@ -29,3 +29,10 @@ class PostForm(forms.ModelForm):
 	class Meta:
 		model = Post
 		fields = ['content']
+
+class Especialidades:
+	nombre = forms.CharField(label='especialidades')
+
+	class Meta:
+		model = Especialidades
+		fields =['nombre']
