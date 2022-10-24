@@ -23,13 +23,15 @@
             <li class="btn"><a href="{% url 'citas' %}">Agendar cita</a></li>
             <li class="btn"><a href="{% url 'citas' %}">Agendar cita</a></li>
         </ul>-->
-        <div class="btn-group">
-
-            <button><a href="{% url 'citas' %}">Agendar cita</a></button> 
-            <button><a href="{% url 'citas' %}">Laboratorios</a></button> 
-            <button><a href="{% url 'citas' %}">Resultados de laboratorio</a></button>
-            
-        </div>
+        
+            <div class="btn-group">
+                
+                <button><a href="{% url 'citas' %}">Agendar cita</a></button> 
+                <button><a href="{% url 'citas' %}">Laboratorios</a></button> 
+                <button><a href="{% url 'citas' %}">Resultados de laboratorio</a></button>
+                
+            </div>
+            <script src="{% static 'functions.js' %}"></script>
     
 </body>
 
