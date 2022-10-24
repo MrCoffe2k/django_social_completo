@@ -13,7 +13,7 @@ def feed(request):
 	posts = Post.objects.all()
 
 	context = { 'posts': posts}
-	return render(request, 'social/feed.html', context)
+	return render(request, 'social/menu.html', context)
 
 def register(request):
 	if request.method == 'POST':
@@ -22,7 +22,7 @@ def register(request):
 			user = form.save()
 			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
-			return redirect('feed')
+			return redirect('login')
 	else:
 		form = UserRegisterForm()
 

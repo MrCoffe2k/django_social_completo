@@ -31,7 +31,7 @@ class PostForm(forms.ModelForm):
 		fields = ['content']
 
 class Especialidades:
-	nombre = forms.CharField(label='especialidades')
+	nombre = forms.CharField(label='Nombre')
 
 	class Meta:
 		model = Especialidades
