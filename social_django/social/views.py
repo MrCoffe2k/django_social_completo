@@ -75,9 +75,20 @@ def unfollow(request, username):
 	messages.success(request, f'Ya no sigues a {username}')
 	return redirect('feed')
 
-def gestionarusuario(request):
-	context = { 'form' : form }
-	return render(request, 'social/gestionarusuario.html')
+def gestionarusuario(request,idPaciente):
+
+	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
+	form = UserRegisterForm(instance=paciente)
+	return render(request, "social/gestionarusuario.html", {"form":form})
+
+def actualizar_paciente(request, idPaciente):
+	paciente = Paciente.objects.get(pk=idPaciente)
+	form = UserRegisterForm(request.POST, instance=paciente)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/feed.html", {"paciente":paciente})
+
+	
 
 def menu(request):
 	context = {}
