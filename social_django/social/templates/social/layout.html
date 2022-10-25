@@ -41,9 +41,9 @@
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
 			<a class="feed" href="{% url 'menu' %}">Inicio</a>
-			<a  href="{% url 'gestionarusuario' user.idPaciente %}">Gestionar</a>
-			<a  href="{% url 'creacionconsulta' %}">Creacion de consulta</a>
-			<a  href="{% url 'catalogolaboratorios' %}">Catalogo de Laboratorios</a>
+			<!-- <a  href="{% url 'gestionarusuario' user.idPaciente %}">Gestionar</a> -->
+			<!-- <a  href="{% url 'creacionconsulta' %}">Creacion de consulta</a> -->
+			<!-- <a  href="{% url 'catalogolaboratorios' %}">Catalogo de Laboratorios</a> -->
 			
 			{% endif %}
 		</nav>
