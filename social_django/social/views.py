@@ -13,7 +13,7 @@ def feed(request):
 	posts = Post.objects.all()
 
 	context = { 'posts': posts}
-	return render(request, 'social/menu.html', context)
+	return render(request, 'social/feed.html', context)
 
 def register(request):
 	if request.method == 'POST':
