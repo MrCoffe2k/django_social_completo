@@ -88,8 +88,6 @@ def actualizar_paciente(request, idPaciente):
 		form.save()
 	return render(request, "social/feed.html", {"paciente":paciente})
 
-	
-
 def creacionconsulta(request):
 	if request.method == 'POST':
 		form = Consulta(request.POST)
@@ -117,8 +115,7 @@ def catalogolaboratorios(request):
 
 
 def busquedalaboratorios(request):
-
-
+	context = {}
 	return render(request, "social/busquedalaboratorios.html")
 	
 def menu(request):
@@ -129,7 +126,7 @@ def citas(request):
 	context = {}
 	return render(request, 'social/citas.html')
 
-def citas(request):
+def establecerhorarios(request):
 	context = {}
 	return render(request, 'social/establecerhorarios.html')
 	

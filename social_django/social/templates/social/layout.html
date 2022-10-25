@@ -41,7 +41,6 @@
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
 			<a class="feed" href="{% url 'menu' %}">Inicio</a>
-			<a class="profile" href="{% url 'profile' request.user.username %}">Mi Perfil</a>
 			<a  href="{% url 'gestionarusuario' user.idPaciente %}">Gestionar</a>
 			<a  href="{% url 'creacionconsulta' %}">Creacion de consulta</a>
 			<a  href="{% url 'catalogolaboratorios' %}">Catalogo de Laboratorios</a>
