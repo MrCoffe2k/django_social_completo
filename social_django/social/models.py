@@ -95,18 +95,18 @@ class Paciente(AbstractUser):
 		user.save(using=self._db)
 		return user
 class Especialidades(models.Model):
-	idEspecialidades = models.IntegerField(primary_key=True)
-	Nombre = models.CharField(max_length=30)
+	idEspecialidades = models.AutoField(primary_key=True)
+	nombre = models.CharField(max_length=30)
 
 	def __str__(self):
-		return f'{self.Nombre}'
+		return f'{self.nombre}'
 
 	class Meta:
 		verbose_name_plural = 'Especialidades'
 
 
 class Especialistas(models.Model):
-	idEspecialista = models.IntegerField(primary_key=True)
+	idEspecialista = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=20)
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno= models.CharField(max_length=20)
@@ -121,7 +121,7 @@ class Especialistas(models.Model):
 	class Meta:
 		verbose_name_plural = "Especialistas"
 class Horarios (models.Model):
-	id = models.IntegerField(primary_key=True)
+	id = models.AutoField(primary_key=True)
 	dia = models.CharField(max_length=15)
 	hora = models.TimeField()
 	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,null=True,related_name='hola2')
@@ -132,7 +132,7 @@ class Horarios (models.Model):
 	class Meta:
 		verbose_name_plural = "Horarios"
 class Estudios(models.Model):
-	idEstudios = models.IntegerField(primary_key=True)
+	idEstudios = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=20)
 	precio = models.FloatField(max_length=6)
 	requisitos = models.CharField(max_length=300)
@@ -146,7 +146,7 @@ class Estudios(models.Model):
 		verbose_name_plural = "Estudios"
 
 class Peso(models.Model):
-	idPeso = models.IntegerField(primary_key=True)
+	idPeso = models.AutoField(primary_key=True)
 	peso = models.FloatField()
 	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='hola3')
 
@@ -169,7 +169,7 @@ class Consultas(models.Model):
 	class Meta:
 		verbose_name_plural = "Consultas"
 class Altura(models.Model):
-	idAltura = models.IntegerField(primary_key=True)
+	idAltura = models.AutoField(primary_key=True)
 	altura = models.FloatField()
 	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola4')
 	
@@ -181,7 +181,7 @@ class Altura(models.Model):
 	  
 
 class Laboratorio(models.Model):
-	idLaboratorio = models.IntegerField(primary_key=True)
+	idLaboratorio = models.AutoField(primary_key=True)
 	idMuestra = models.IntegerField()
 	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
 	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
@@ -193,7 +193,7 @@ class Laboratorio(models.Model):
 	class Meta:
 		verbose_name_plural = "Laboratorio"
 class Citas(models.Model):
-	idCitas = models.IntegerField(primary_key=True)
+	idCitas = models.AutoField(primary_key=True)
 	fecha = models.DateField()
 	idEspecialista = models.ForeignKey(Especialistas, on_delete=models.CASCADE,related_name='hola7')
 	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola8')
@@ -204,7 +204,7 @@ class Citas(models.Model):
 	class Meta:
 		verbose_name_plural = "Citas"
 class Resultados_Lab(models.Model):
-	idResultados = models.IntegerField(primary_key=True)
+	idResultados = models.AutoField(primary_key=True)
 	NombreEstudio = models.CharField(max_length=30)
 	idPaciente = models.ForeignKey(Paciente,on_delete=models.CASCADE, related_name='hola9')
 

@@ -22,7 +22,7 @@ def register(request):
 			user = form.save()
 			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
-			return redirect('feed')
+			return redirect('login')
 	else:
 		form = UserRegisterForm()
 
@@ -121,6 +121,36 @@ def busquedalaboratorios(request):
 
 	return render(request, "social/busquedalaboratorios.html")
 	
+def menu(request):
+	context = {}
+	return render(request, 'social/menu.html')
+
+def citas(request):
+	context = {}
+	return render(request, 'social/citas.html')
+
+def citas(request):
+	context = {}
+	return render(request, 'social/establecerhorarios.html')
+	
+def creacionexpediente(request):
+	posts = Consultas.objects.all()
+	context = { 'Consulta': Consultas}
+	return render(request, 'social/creacionexpediente.html', context)
+
+def editarmotivo(request,motivo):
+
+	motivo = Consultas.objects.filter(motivo = motivo).first()
+	form = UserRegisterForm(instance=motivo)
+	return render(request, "social/edicionexpediente.html", {"form":form})
+
+
+def editar_expediente(request, motivo):
+	observacion = Consultas.objects.get(motivo)
+	form = UserRegisterForm(request.POST, instance=observacion)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/edicionexpediente.html", {"paciente":observacion})
 
 
 

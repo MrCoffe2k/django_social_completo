@@ -1,0 +1,315 @@
+.container{
+  display:flex;
+ align-items: center;
+ justify-content:center;
+ flex-direction: column;
+}
+
+body.principal {
+background-image: url("../django_social_completo/social_django/media/Fondo.jpeg");
+background-attachment: fixed;
+background-size: 100%;
+margin: auto;
+  font-family: 'Varela Round', Helvetica, Arial, serif;
+}
+
+button{
+  background: rgb(39, 210, 93);
+color: black;
+  box-shadow: none;
+}
+
+a{
+font-size: .93rem;
+text-decoration: none;
+color: black;
+}
+.main-head{
+background: white;
+color: black;
+} 
+
+nav.main{
+min-height: 7vh;
+display: flex;
+width: 65%;
+margin: auto; 
+align-items: center;
+padding: 0.5rem;
+}
+
+nav.main ul{
+display: flex;
+flex: 1 1 40rem;
+justify-content: space-around;
+align-items: center;
+list-style: none;
+}
+
+.second-nav{
+display: flex;
+padding: 15px 30px;
+}
+
+.second-nav .feed{
+flex: 1 1 30px;
+}
+
+.second-nav .feed:hover{
+flex: 1 1 30px;
+color: rgb(38, 178, 66);
+}
+
+.second-nav .profile{
+flex: 1 1 30px;
+}
+
+.second-nav .profile:hover{
+flex: 1 1 30px;
+color: rgb(48, 180, 55);
+}
+
+.second-nav .new{
+flex: 6 1 5rem;
+text-align: right;
+text-transform: uppercase;
+  color: #209d41;
+}
+
+.second-nav .new:hover{
+color: rgb(37, 171, 73);
+}
+  .full-width {
+   width: 100%;
+   padding: 0;
+  }
+
+  .btn-primary,
+  .btn-primary:active,
+  .btn-primary:visited {
+    background-color: #20b85d !important;
+    border-color: #20b85d  !important;
+    box-shadow: none !important;
+  }
+
+  .btn-primary:hover {
+      box-shadow: 0 0 3px #11d154 !important;
+      background: rgb(20, 206, 85) !important;
+      border-color: rgba(20, 206, 85) !important;
+  }
+
+  .btn-light:hover {
+      box-shadow: 0 0 3px #34b23b !important;
+      background-color: #34b23b !important;
+      border-color: #34b23b !important;
+  }
+
+  .btn-light {
+      background-color: #34b23b !important;
+      border-color: #34b23b !important;
+  }
+
+  .btn:active {
+      transition: none !important;
+  }
+
+  .catalogue-buttons {
+      padding-top: 25px;
+      padding-bottom: 15px;
+
+  }
+
+  .catalogue-button {
+      border-radius: 0;
+  }
+
+  .container-fluid {
+      width: 95%;
+  }
+
+      #button-division {
+          color: #2b9454;
+          border-width: 2px;
+          padding-bottom: 10px;
+      }
+
+      .catalogue-field {
+          padding-bottom: 25px;
+      }
+
+      .field-title {
+          padding-left: 10px;
+      }
+
+      .space-icon {
+          padding-right: 10px;
+      }
+
+      body {
+          background-color: #13c14d;
+      }
+
+      .form-select {
+          border-color: #21b655;
+          border-width: 1px;
+      }
+
+      .catalogue-option {
+          padding-left: 6px;
+          padding-right: 6px;
+          padding-top: 3px;
+          padding-bottom: 3px;
+      }
+
+      select {
+          color: #0d7030 !important;
+          font-weight: lighter !important;
+      }
+
+      select option {
+          color: #16a239 !important;
+      }
+
+      select option:checked {
+
+          color: #0cbf36 !important;
+
+      }
+
+      .option-selected {
+          color: #1dbc25 !important;
+      }
+
+      .btn-link {
+          width: 75%;
+          background-color: rgb(31, 141, 19);
+          height: 40px;
+          border-radius: 7px;
+      }
+
+
+/* Article */
+
+article{
+width: 93%;
+margin: auto;
+padding: 40px 0;
+border-bottom: 2px solid #0c6426;
+}
+
+.username{
+margin-bottom: .2rem;
+}
+
+.username a{
+font-size: 1.1rem;
+}
+
+.container-article{
+display: flex;
+}
+
+.container-article img{
+height: 68px;
+width: 68px;
+margin-right: 10px;
+border-radius: 50%;
+}
+
+article:last-child {
+border-bottom: 0;
+}
+
+time {
+font-size: .8rem;
+opacity: .7;
+}
+
+.post{
+font-size: .94rem;
+}
+
+/* PROFILE */
+.profile{
+display: flex;
+align-items: center;
+flex-direction: column;
+}
+
+.profile img{
+height: 100px;
+width: 100px;
+margin-right: 10px;
+border-radius: 50%;
+margin: 20px;
+}
+.profile h2{
+margin-top: -10px;
+font-size: 1.3rem;
+}
+
+/* Followers / Following / Post */
+.follow{
+display: flex;
+width: 95%;
+justify-content: space-around;
+margin: 30px auto;
+text-align: center;
+border-bottom: 2px solid #ECEEEF;
+padding-bottom: 20px;
+}
+
+
+/*Form Elements*/
+form {
+  margin: 0;
+  padding: 40px;
+  font-size: 1rem;
+}
+input {
+width: 100%;
+border: 0;
+border-bottom: 2px solid #0f571b;
+outline: 0;
+background: rgb(46, 213, 93);
+padding: 20px 0 4px;
+margin: 0 0 20px;
+color: #13a52c;
+}
+input:focus {
+border-color: #0eb36e;
+color: #0b8f58;
+}
+textarea {
+width: 100%;
+border: 0;
+border-bottom: 2px solid #34c653;
+outline: 0;
+background: #fff;
+padding: 20px 0 4px;
+margin: 0 0 20px;
+color: #35d399;
+}
+textarea:focus {
+border-color: #08a647;
+color: #2C3238;
+}
+
+
+/*Notifications*/
+.notification {
+text-align: center;
+padding: 10px 20px;
+border-radius: 4px;
+color: #fff;
+font-size: 0.9rem;
+}
+.success {
+background: #43DC7E;
+color: white;
+}
+.error {
+background: #AB3444;
+color: white;
+margin-bottom: 20px;
+}

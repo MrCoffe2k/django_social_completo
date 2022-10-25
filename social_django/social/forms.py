@@ -4,7 +4,7 @@ from pyexpat import model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Consultas, Estudios, Paciente, Peso, Post
+from .models import *
 
 class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
@@ -57,3 +57,9 @@ class busquedalaboratorios(forms.ModelForm):
 	class Meta:
 		model= Estudios
 		fields = '__all__'
+class Especialidades:
+	nombre = forms.CharField(label='Nombre')
+
+	class Meta:
+		model = Especialidades
+		fields =['nombre']
