@@ -138,19 +138,7 @@ def creacionexpediente(request):
 	context = { 'Consulta': Consultas}
 	return render(request, 'social/creacionexpediente.html', context)
 
-def editarmotivo(request,motivo):
 
-	motivo = Consultas.objects.filter(motivo = motivo).first()
-	form = UserRegisterForm(instance=motivo)
-	return render(request, "social/edicionexpediente.html", {"form":form})
-
-
-def editar_expediente(request, motivo):
-	observacion = Consultas.objects.get(motivo)
-	form = UserRegisterForm(request.POST, instance=observacion)
-	if form.is_valid():
-		form.save()
-	return render(request, "social/edicionexpediente.html", {"paciente":observacion})
 
 
 

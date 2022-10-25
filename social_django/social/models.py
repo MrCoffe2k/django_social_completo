@@ -214,3 +214,5 @@ class Resultados_Lab(models.Model):
 	class Meta:
 		verbose_name_plural = 'ResultadosDeLaboratorio'
 
+
+
