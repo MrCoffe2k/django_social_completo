@@ -20,5 +20,7 @@ urlpatterns = [
     path('citas/', views.citas, name='citas'),
     path('horarios/', views.citas, name='horarios'),
 	path('actualizar_paciente/<int:idPaciente>/', views.actualizar_paciente, name='actualizar_paciente'),
+	path('creacionexpediente/', views.creacionexpediente, name='Creacion de Expediente'),
+	path('edicionexpediente/', views.creacionexpediente, name='Edicion de Expediente'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

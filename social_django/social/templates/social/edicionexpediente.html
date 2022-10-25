@@ -7,6 +7,12 @@
     <title>Edicion de expediente</title>
 </head>
 <body>
+    <form action="{% url 'editarmotivo' Consultas.motivo %}"class="form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+    
+        <button type="submit" id="submit">Guardar</button>
+    </form>
     
 </body>
 </html>
