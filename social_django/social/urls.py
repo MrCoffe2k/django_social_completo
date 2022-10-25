@@ -17,4 +17,7 @@ urlpatterns = [
 	path('unfollow/<str:username>/', views.unfollow, name='unfollow'),
 	path('gestionarusuario/<int:idPaciente>/', views.gestionarusuario, name='gestionarusuario'),
 	path('actualizar_paciente/<int:idPaciente>/', views.actualizar_paciente, name='actualizar_paciente'),
+	path('creacionconsulta/', views.creacionconsulta, name='creacionconsulta'),
+	path('catalogolaboratorios/', views.catalogolaboratorios, name='catalogolaboratorios'),
+	path('catalogolaboratorios/', views.catalogolaboratorios, name='busquedalaboratorios'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

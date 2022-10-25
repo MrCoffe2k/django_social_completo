@@ -1,5 +1,5 @@
 body{
-	background: #0f7a48;
+  background-image: url("fondo.jpeg");
 	font-size: 62.5%;
 	font-family: 'Varela Round', Helvetica, Arial, serif;
 }
@@ -38,7 +38,7 @@ img{
 
 /* Nav bar */
 .main-head{
-	background: white;
+	background-color:lightseagreen;
 	color: black;
 }
 
@@ -73,7 +73,7 @@ a{
 
 
 .main{
-	background: white;
+	background-color:lightseagreen;
 	width: 60%;
 	margin: 5% auto;
 	border-radius: 4px;
@@ -82,6 +82,7 @@ a{
 
 /* NAVIGATION BAR */
 .second-nav{
+  background-color:lightseagreen;
 	display: flex;
 	padding: 15px 30px;
 }
@@ -198,10 +199,11 @@ input {
   border: 0;
   border-bottom: 2px solid #D3D8DC;
   outline: 0;
-  background: #fff;
+  background-color: darkseagreen;
   padding: 20px 0 4px;
   margin: 0 0 20px;
   color: #777B7E;
+  background-color:paleturquoise
 }
 input:focus {
   border-color: #7A9D96;
@@ -225,8 +227,8 @@ button#submit {
   width: 100%;
   padding: 20px 0;
   text-align: center;
-  background: #7A9D96;
-  color: #fff;
+  background-color: skyblue;
+  color: black;
   border: 0;
   border-radius: 4px;
   opacity: .8;

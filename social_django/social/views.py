@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import UserRegisterForm, PostForm
+from .forms import Catalogo, Consulta, UserRegisterForm, PostForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -90,6 +90,37 @@ def actualizar_paciente(request, idPaciente):
 
 	
 
+def creacionconsulta(request):
+	if request.method == 'POST':
+		form = Consulta(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('feed')
+	else:
+		form = Consulta()
+
+	context = { 'form' : form }
+	return render(request, "social/creacionconsulta.html", context)
+
+
+def catalogolaboratorios(request):
+	if request.method == 'POST':
+		form = Catalogo(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('feed')
+	else:
+		form = Catalogo()
+
+	context = { 'form' : form }
+	return render(request, "social/catalogolaboratorios.html", context)
+
+
+def busquedalaboratorios(request):
+
+
+	return render(request, "social/busquedalaboratorios.html")
+	
 
 
 

@@ -53,7 +53,7 @@ class Relationship(models.Model):
 
 class Paciente(AbstractUser):
 	idPaciente= models.AutoField(primary_key=True)
-	nombre = models.CharField(max_length=20, default="Nombre")
+	nombre = models.CharField(max_length=20)
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno = models.CharField(max_length=20)
 	FechaNacimiento = models.DateField(null=True)
@@ -135,10 +135,12 @@ class Estudios(models.Model):
 	idEstudios = models.IntegerField(primary_key=True)
 	nombre = models.CharField(max_length=20)
 	precio = models.FloatField(max_length=6)
-	requisitos = models.TextField(max_length=300)
+	requisitos = models.CharField(max_length=300)
+	tiempoAplicacion = models.CharField(max_length=300)
+	analiza = models.CharField(max_length=300)
 
 	def __str__(self):
-		return f'{self.nombre, self.precio, self.requisitos}'
+		return f'{self.nombre, self.precio, self.requisitos, self.tiempoAplicacion, self.analiza}'
 
 	class Meta:
 		verbose_name_plural = "Estudios"
@@ -154,12 +156,16 @@ class Peso(models.Model):
 	class Meta:
 		verbose_name_plural = "Peso"
 class Consultas(models.Model):
-	idConsultas = models.IntegerField(primary_key=True)
-	motivo = models.TextField(max_length=300)
-	fecha = models.DateTimeField()
+	idConsultas = models.AutoField(primary_key=True)
+	motivo = models.CharField(max_length=300)
+	fecha = models.DateField()
+	nombre = models.CharField(max_length=100, default='Nombre')
+	edad = models.IntegerField(default=0)
+	peso = models.FloatField(default=0)
+	altura = models.FloatField()
 
 	def __str__(self):
-		return f'{self.motivo,self.fecha}'
+		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura}'
 	class Meta:
 		verbose_name_plural = "Consultas"
 class Altura(models.Model):

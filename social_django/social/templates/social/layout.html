@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en"> 
 <head>
 	<title>Django Social</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 <body>
-
 	<header class="main-head">
 		<nav class="main">
 			<h1 id="logo">ACM</h1>
@@ -42,8 +41,10 @@
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
 			<a class="feed" href="{% url 'feed' %}">Inicio</a>
-			<a class="profile" href="{% url 'profile' request.user.username %}">Mi Perfil</a>
 			<a  href="{% url 'gestionarusuario' user.idPaciente %}">Gestionar</a>
+			<a  href="{% url 'creacionconsulta' %}">Creacion de consulta</a>
+			<a  href="{% url 'catalogolaboratorios' %}">Catalogo de Laboratorios</a>
+			
 			{% endif %}
 		</nav>
 
