@@ -60,7 +60,7 @@ class Paciente(AbstractUser):
 	peso = models.FloatField(null=True)
 	altura = models.FloatField(null=True)
 	telefono = models.BigIntegerField(null=True)
-	correo = models.EmailField(max_length=40, null=True, unique=True)
+	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -69,18 +69,6 @@ class Paciente(AbstractUser):
 
 	def __str__(self):
 		return f'{self.idPaciente,self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
-
-	def create_user(self, nombre, password=None):
-		"""
-		Creates and saves a User with the given email and password.
-		"""
-		user = self.model(
-		nombre=self.save(nombre),
-		)
-
-		user.set_password(password)
-		user.save(using=self._db)
-		return user
 
 	def create_superuser(self, nombre, password):
 		"""
@@ -94,6 +82,7 @@ class Paciente(AbstractUser):
 		user.admin = True
 		user.save(using=self._db)
 		return user
+
 class Especialidades(models.Model):
 	idEspecialidades = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=30)
