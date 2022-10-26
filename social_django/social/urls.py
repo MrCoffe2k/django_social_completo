@@ -18,11 +18,11 @@ urlpatterns = [
 	path('gestionarusuario/<int:idPaciente>/', views.gestionarusuario, name='gestionarusuario'),
     path('menu/', views.menu, name='menu'),
     path('citas/', views.citas, name='citas'),
-    path('horarios/', views.citas, name='horarios'),
+    path('establecerhorarios/', views.establecerhorarios, name='establecerhorarios'),
 	path('actualizar_paciente/<int:idPaciente>/', views.actualizar_paciente, name='actualizar_paciente'),
 	path('creacionconsulta/', views.creacionconsulta, name='creacionconsulta'),
 	path('catalogolaboratorios/', views.catalogolaboratorios, name='catalogolaboratorios'),
-	path('catalogolaboratorios/', views.catalogolaboratorios, name='busquedalaboratorios'),
+	path('busquedalaboratorios/', views.busquedalaboratorios, name='busquedalaboratorios'),
 	path('creacionexpediente/', views.creacionexpediente, name='Creacion de Expediente'),
 	path('edicionexpediente/', views.creacionexpediente, name='Edicion de Expediente'),
     
