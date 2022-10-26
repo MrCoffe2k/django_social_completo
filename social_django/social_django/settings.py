@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'social_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'AgendaControlMedico',
+       'NAME': 'agendacontrolmedico',
        'USER': 'postgres',
        'PASSWORD': 'acm',
        'HOST': '',
