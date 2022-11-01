@@ -23,7 +23,11 @@ urlpatterns = [
 	path('creacionconsulta/', views.creacionconsulta, name='creacionconsulta'),
 	path('catalogolaboratorios/', views.catalogolaboratorios, name='catalogolaboratorios'),
 	path('busquedalaboratorios/', views.busquedalaboratorios, name='busquedalaboratorios'),
-	path('creacionexpediente/', views.creacionexpediente, name='Creacion de Expediente'),
-	path('edicionexpediente/', views.creacionexpediente, name='Edicion de Expediente'),
+	path('creacionexpediente/', views.creacionexpediente, name='creacionexpediente'),
+	path('edicionexpediente/', views.creacionexpediente, name='edicionexpediente'),
+	path('asignarlaboratorio/', views.asignarlaboratorio, name='asignarlaboratorio'),
+	path('visualizacionderesultados/', views.visualizacionderesultados, name='visualizacionderesultados'),
+	path('busquedaexpediente/', views.busquedaexpediente, name='busquedaexpediente'),
+	
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

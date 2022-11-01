@@ -135,14 +135,14 @@ def creacionexpediente(request):
 	context = { 'Consulta': Consultas}
 	return render(request, 'social/creacionexpediente.html', context)
 
+def asignarlaboratorio(request):
+	context = {}
+	return render(request, 'social/asignarlaboratorio.html')
 
+def visualizacionderesultados(request):
+	context = {}
+	return render(request, 'social/visualizacionderesultados.html')
 
-
-
-
-
-
-
-
-
-
+def busquedaexpediente(request):
+	context = {}
+	return render(request, 'social/busquedaexpediente.html')
