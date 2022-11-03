@@ -102,6 +102,7 @@ class Especialistas(models.Model):
 	cedulaMedica = models.IntegerField()
 	cedulaEspecialidad = models.IntegerField()
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
+	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
 	password = models.CharField(max_length=20,null=False)
 
 	def __str__(self):
@@ -203,5 +204,13 @@ class Resultados_Lab(models.Model):
 	class Meta:
 		verbose_name_plural = 'ResultadosDeLaboratorio'
 
+class RolesUsuarios(models.Model):
+	idTipo = models.AutoField(primary_key=True)
+	nombre = models.CharField(max_length=30)
+	rol = models.CharField(max_length=1)
 
-
+	def __str__(self):
+		return f'{self.rol,self.nombre}'
+	
+	class Meta:
+		verbose_name_plural = 'Roles'

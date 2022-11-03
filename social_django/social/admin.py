@@ -16,6 +16,7 @@ admin.site.register(Consultas)
 admin.site.register(Altura)
 admin.site.register(Laboratorio)
 admin.site.register(Citas)
+admin.site.register(RolesUsuarios)
 
 admin.site.site_header = 'Agenda de Control Medico'
 admin.site.index_title = 'Panel de control ACM'
