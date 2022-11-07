@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import *
+from .widget import DatePickerInput
 
 class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
@@ -22,6 +23,7 @@ class UserRegisterForm(UserCreationForm):
 		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2']
 		help_texts = {k:"" for k in fields}
 
+
 class PostForm(forms.ModelForm):
 	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': '¿Qué está pasando?'}), required=True)
 
@@ -29,16 +31,27 @@ class PostForm(forms.ModelForm):
 		model = Post
 		fields = ['content']
 
+		
+
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Observaciones'}), required=True)
-	fecha = forms.DateField(label="Fecha (Año-Mes-Dia)")
+	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
 	nombre = forms.CharField(label="Nombre", max_length=100)
 	peso = forms.FloatField(label="Peso")
 	altura = forms.FloatField(label="Altura")
 	edad = forms.IntegerField(label = "Edad")
+	doctor = forms.ModelChoiceField(
+    queryset=Paciente.objects.values_list('nombre',flat=True),
+    label='Doctor',
+    widget=forms.Select)
+
 	class Meta:
 		model= Consultas
-		fields=['fecha', 'nombre','edad','peso','altura','motivo']
+		fields=['fecha','doctor','nombre','edad','peso','altura','motivo']
+
+		widgets = {
+            'fecha' : DatePickerInput(),
+        }
 
 class Catalogo(forms.ModelForm):
 	nombre= forms.CharField(label="Nombre del estudio")

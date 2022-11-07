@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
+from .widget import DatePickerInput
+
 
 
 
@@ -153,9 +155,10 @@ class Consultas(models.Model):
 	edad = models.IntegerField(default=0)
 	peso = models.FloatField(default=0)
 	altura = models.FloatField()
+	doctor = models.CharField(max_length=100, default='Doctor')
 
 	def __str__(self):
-		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura}'
+		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura, self.doctor}'
 	class Meta:
 		verbose_name_plural = "Consultas"
 class Altura(models.Model):
