@@ -130,3 +130,6 @@ dmypy.json
 
 # Virtual enviroment specific
 VENV-SOCIAL
+
+# Migrations
+social_django/social/migrations
