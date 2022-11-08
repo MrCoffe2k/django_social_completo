@@ -16,7 +16,7 @@
 				{% if request.user.is_authenticated %}
 				<li><a href="{% url 'logout' %}">Salir</a></li>
 				{% else %}
-				<li><a href="{% url 'register' %}">Registrarse</a></li>
+				<li><a href="{% url 'registroStaff' %}">Registrarse</a></li>
 				<li><a href="{% url 'login' %}">Login</a></li>
 				{% endif %}
 				

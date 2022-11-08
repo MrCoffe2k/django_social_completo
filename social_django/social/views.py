@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import Catalogo, Consulta, UserRegisterForm, PostForm
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -15,7 +15,7 @@ def feed(request):
 	context = { 'posts': posts}
 	return render(request, 'social/feed.html', context)
 
-def register(request):
+def registroPaciente(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
@@ -25,6 +25,18 @@ def register(request):
 			return redirect('login')
 	else:
 		form = UserRegisterForm()
+
+	context = { 'form' : form }
+	return render(request, 'social/register.html', context)
+
+def registroStaff(request):
+	if request.method == 'POST':
+		form = StaffRegisterForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			return redirect('login')
+	else:
+		form = StaffRegisterForm()
 
 	context = { 'form' : form }
 	return render(request, 'social/register.html', context)
@@ -146,3 +158,5 @@ def visualizacionderesultados(request):
 def busquedaexpediente(request):
 	context = {}
 	return render(request, 'social/busquedaexpediente.html')
+
+

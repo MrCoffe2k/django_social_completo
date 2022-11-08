@@ -70,7 +70,7 @@ class Paciente(AbstractUser):
 		verbose_name_plural ="Pacientes"
 
 	def __str__(self):
-		return f'{self.idPaciente,self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.FechaNacimiento, self.peso, self.altura, self.telefono, self.correo}'
+		return f'{self.nombre, self.correo}'
 
 	def create_superuser(self, nombre, password):
 		"""
@@ -105,7 +105,11 @@ class Especialistas(models.Model):
 	cedulaEspecialidad = models.IntegerField()
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
 	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
-	password = models.CharField(max_length=20,null=False)
+	password = models.CharField(max_length=20,null=False,default='Contraseña')
+	telefono = models.BigIntegerField(null=True)
+
+	USERNAME_FIELD = 'correo'
+	REQUIRED_FIELDS = ['username']
 
 	def __str__(self):
 		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.cedulaMedica, self.cedulaEspecialidad}'
@@ -155,7 +159,7 @@ class Consultas(models.Model):
 	edad = models.IntegerField(default=0)
 	peso = models.FloatField(default=0)
 	altura = models.FloatField()
-	doctor = models.CharField(max_length=100, default='Doctor')
+	doctor = models.TextField(max_length=100, default='Doctor')
 
 	def __str__(self):
 		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura, self.doctor}'
