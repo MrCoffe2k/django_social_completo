@@ -63,6 +63,7 @@ class Paciente(AbstractUser):
 	altura = models.FloatField(null=True)
 	telefono = models.BigIntegerField(null=True)
 	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
+	contrasena=models.CharField(max_length=20,default='hola')
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -223,6 +224,7 @@ class RolesUsuarios(models.Model):
 		verbose_name_plural = 'Roles'
 
 class login(models.Model):
+	idlogin= models.AutoField(primary_key=True)
 	username=models.CharField(max_length=63)
 	password=models.CharField(max_length=63)
 	

@@ -104,5 +104,5 @@ class LoginForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
 
 	class Meta:
-		model = Paciente
+		model = login
 		fields ='__all__'
