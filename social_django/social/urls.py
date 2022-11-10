@@ -11,7 +11,7 @@ urlpatterns = [
 	path('profile/<str:username>/', views.profile, name='profile'),
 	path('registroPaciente/', views.registroPaciente, name='registroPaciente'),
 	path('registroStaff/', views.registroStaff, name='registroStaff'),
-	path('login/', LoginView.as_view(template_name='social/login.html'), name='login'),
+	path('login_page/', views.login_page, name='login'),
 	path('logout/', LogoutView.as_view(template_name='social/logout.html'), name='logout'),
 	path('post/', views.post, name='post'),
 	path('follow/<str:username>/', views.follow, name='follow'),

@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import *
+from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth import login, authenticate
 User = get_user_model()
+
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -41,7 +45,24 @@ def registroStaff(request):
 	context = { 'form' : form }
 	return render(request, 'social/register.html', context)
 
-@login_required
+def login_page(request):
+	form = LoginForm()
+	message = 'hola'
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			user = authenticate(
+				username=form.cleaned_data['username'],
+				password=form.cleaned_data['password'],
+			)
+			if user is not None:
+				login(request, user)
+				message = f'Hello {user.username}! You have been logged in'
+			else:
+				message = 'Login failed!'
+	return render(
+        request, 'social/login.html', context={'form': form, 'message': message})
+
 def post(request):
 	current_user = get_object_or_404(User, pk=request.user.pk)
 	if request.method == 'POST':

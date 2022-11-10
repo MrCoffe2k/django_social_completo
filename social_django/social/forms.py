@@ -2,9 +2,12 @@ from cProfile import label
 from dataclasses import fields
 from pyexpat import model
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .widget import DatePickerInput
+
+
 
 
 
@@ -95,3 +98,11 @@ class Especialidades:
 	class Meta:
 		model = Especialidades
 		fields =['nombre']
+
+class LoginForm(forms.ModelForm):
+	username = forms.CharField(label="Usuario")
+	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
+
+	class Meta:
+		model = Paciente
+		fields ='__all__'

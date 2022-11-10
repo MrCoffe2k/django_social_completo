@@ -221,3 +221,13 @@ class RolesUsuarios(models.Model):
 	
 	class Meta:
 		verbose_name_plural = 'Roles'
+
+class login(models.Model):
+	username=models.CharField(max_length=63)
+	password=models.CharField(max_length=63)
+	
+	def __str__(self):
+		return f'{self.username,self.password}'
+	
+	class Meta:
+		verbose_name_plural = 'Login'
