@@ -46,22 +46,20 @@ def registroStaff(request):
 	return render(request, 'social/register.html', context)
 
 def login_page(request):
-	form = LoginForm()
+	form = LoginForm(request.POST or None)
 	message = 'hola'
 	if request.method == 'POST':
-		form = LoginForm(request.POST)
 		if form.is_valid():
-			user = authenticate(
-				username=form.cleaned_data['username'],
-				password=form.cleaned_data['password'],
-			)
+			username=form.cleaned_data.get('username')
+			password=form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
 			if user is not None:
 				message = f'Hello {user.username}! You have been logged in'
+				login(request, user)
 				return redirect('menu')
 			else:
 				message = 'Login failed!'
-	return render(
-        request, 'social/login.html', context={'form': form, 'message': message})
+	return render(request, 'social/login.html', context={'form': form, 'message': message})
 
 def post(request):
 	current_user = get_object_or_404(User, pk=request.user.pk)

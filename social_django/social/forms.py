@@ -15,7 +15,7 @@ class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
-	FechaNacimiento = forms.DateField(label='Fecha de Nacimiento (Año-Mes-Dia)')
+	FechaNacimiento = forms.DateField(label='Fecha', widget=DatePickerInput)
 	peso = forms.FloatField(label='Peso (Kg)')
 	altura = forms.FloatField(label='Altura (cm)')
 	telefono = forms.IntegerField(label='Telefono')
@@ -104,5 +104,5 @@ class LoginForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
 
 	class Meta:
-		model = login
-		fields ='__all__'
+		model = Paciente
+		fields = ['username', 'password']

@@ -97,7 +97,7 @@ class Especialidades(models.Model):
 		verbose_name_plural = 'Especialidades'
 
 
-class Especialistas(models.Model):
+class Especialistas(AbstractBaseUser):
 	idEspecialista = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=20)
 	ApellidoPaterno = models.CharField(max_length=20)
@@ -105,15 +105,28 @@ class Especialistas(models.Model):
 	cedulaMedica = models.IntegerField()
 	cedulaEspecialidad = models.IntegerField()
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
-	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
-	password = models.CharField(max_length=20,null=False,default='Contraseña')
+	correo = models.EmailField(max_length=40, unique=True)
+	password = models.CharField(max_length=20,null=False)
 	telefono = models.BigIntegerField(null=True)
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
 
 	def __str__(self):
-		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno, self.cedulaMedica, self.cedulaEspecialidad}'
+		return f'{self.nombre, self.correo}'
+	
+	def create_superuser(self, nombre, password):
+		"""
+		Creates and saves a superuser with the given email and password.
+		"""
+		user = self.create_user(
+		nombre,
+		password=password,
+		)
+		user.staff = True
+		user.admin = True
+		user.save(using=self._db)
+		return user
 
 	class Meta:
 		verbose_name_plural = "Especialistas"
@@ -224,9 +237,9 @@ class RolesUsuarios(models.Model):
 		verbose_name_plural = 'Roles'
 
 class login(models.Model):
-	idlogin= models.AutoField(primary_key=True)
-	username=models.CharField(max_length=63)
-	password=models.CharField(max_length=63)
+	idlogin = models.AutoField(primary_key=True)
+	username = models.CharField(max_length=63)
+	password = models.CharField(max_length=63)
 	
 	def __str__(self):
 		return f'{self.username,self.password}'
