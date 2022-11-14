@@ -32,18 +32,18 @@ class StaffRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
-	cedulaMedica = forms.IntegerField(label ='Cedula Medica',required=True)
-	cedulaEspecialidad = forms.IntegerField(label ='Cedula de Especialidad',required=True)
+	cedulaMedica = forms.CharField(label='Cedula Medica',max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	cedulaEspecialidad = forms.CharField(label='Cedula Especialidad',max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
 	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
-	telefono = forms.IntegerField(label='Telefono')
+	telefono = forms.CharField(label='Telefono',max_length=10,validators=[RegexValidator(r'^\d{1,10}$')])
 	is_staff = forms.BooleanField(label='¿Aceptas terminos y condiciones?',initial=False,required=True)
 	
 	
 	class Meta:
 		model = Paciente
-		fields =['nombre','ApellidoPaterno','ApellidoMaterno','cedulaMedica','cedulaEspecialidad','telefono','correo','password1']
+		fields =['nombre','ApellidoPaterno','ApellidoMaterno','cedulaMedica','cedulaEspecialidad','telefono','correo','password1','password2','is_staff']
 		help_texts = {k:"" for k in fields}
 
 
