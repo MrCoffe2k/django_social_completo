@@ -76,6 +76,10 @@ class Paciente(AbstractUser):
 	cedulaEspecialidad = models.CharField(max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='id',unique=False,null=True)
 
+	is_superuser= models.BooleanField(default=False)
+	is_staff= models.BooleanField(default=False)
+	is_paciente= models.BooleanField(default=False)
+
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
 	class Meta:

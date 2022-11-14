@@ -24,7 +24,7 @@ def registroPaciente(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			form.save()
 			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
 			return redirect('login')
@@ -56,10 +56,18 @@ def login_page(request):
 			username=form.cleaned_data.get('username')
 			password=form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)
-			if user is not None:
+			if user is not None and user.is_staff:
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu')
+			elif user is not None and user.is_paciente:
+				message = f'Hello {user.username}! You have been logged in'
+				login(request, user)
+				return redirect('menu2')
+			elif user is not None and user.is_superuser:
+				message = f'Hello {user.username}! You have been logged in'
+				login(request, user)
+				return redirect('menu3')
 			else:
 				message = 'Login failed!'
 	return render(request, 'social/login.html', context={'form': form, 'message': message})
@@ -176,6 +184,10 @@ def menu2(request):
 	context = {}
 	return render(request, 'social/menu2.html')
 
+def menu3(request):
+	context = {}
+	return render(request, 'social/menu3.html')
+
 def citas(request):
 	context = {}
 	return render(request, 'social/citas.html')
@@ -201,4 +213,8 @@ def busquedaexpediente(request):
 	context = {}
 	return render(request, 'social/busquedaexpediente.html')
 
+def staff(request):
+	return render(request,'social/menu.html')
 
+def paciente(request):
+	return render(request,'social/menu2.html')

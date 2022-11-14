@@ -2,7 +2,7 @@ from cProfile import label
 from dataclasses import fields
 from pyexpat import model
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, BooleanField
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .widget import DatePickerInput
@@ -22,9 +22,10 @@ class UserRegisterForm(UserCreationForm):
 	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
+	is_paciente = forms.BooleanField(label='¿Aceptas terminos y condiciones?',initial=False,required=True)
 	class Meta:
 		model = Paciente
-		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2']
+		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','peso','altura','telefono','correo','password1','password2','is_paciente']
 		help_texts = {k:"" for k in fields}
 
 class StaffRegisterForm(UserCreationForm):
@@ -37,6 +38,7 @@ class StaffRegisterForm(UserCreationForm):
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
 	telefono = forms.IntegerField(label='Telefono')
+	is_staff = forms.BooleanField(label='¿Aceptas terminos y condiciones?',initial=False,required=True)
 	
 	
 	class Meta:
