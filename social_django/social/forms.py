@@ -6,7 +6,7 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from .widget import DatePickerInput
-
+from django.core.validators import RegexValidator
 
 
 
@@ -15,10 +15,10 @@ class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
-	FechaNacimiento = forms.DateField(label='Fecha', widget=DatePickerInput)
-	peso = forms.FloatField(label='Peso (Kg)')
-	altura = forms.FloatField(label='Altura (cm)')
-	telefono = forms.IntegerField(label='Telefono')
+	FechaNacimiento = forms.DateField(label='Fecha', widget=DatePickerInput, required=True)
+	peso = forms.CharField(label='Peso',max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	altura = forms.CharField(label='Altura',max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	telefono = forms.CharField(label='Telefono',max_length=10,validators=[RegexValidator(r'^\d{1,10}$')])
 	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
@@ -31,8 +31,8 @@ class StaffRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20)
 	ApellidoPaterno = forms.CharField(label='Apellido Paterno',max_length=20)
 	ApellidoMaterno = forms.CharField(label='Apellido Materno',max_length=20)
-	cedulaMedica = forms.IntegerField(label ='Cedula Medica')
-	cedulaEspecialidad = forms.IntegerField(label ='Cedula de Especialidad')
+	cedulaMedica = forms.IntegerField(label ='Cedula Medica',required=True)
+	cedulaEspecialidad = forms.IntegerField(label ='Cedula de Especialidad',required=True)
 	correo = forms.EmailField(label='Correo',max_length=40)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
@@ -40,7 +40,7 @@ class StaffRegisterForm(UserCreationForm):
 	
 	
 	class Meta:
-		model = Especialistas
+		model = Paciente
 		fields =['nombre','ApellidoPaterno','ApellidoMaterno','cedulaMedica','cedulaEspecialidad','telefono','correo','password1']
 		help_texts = {k:"" for k in fields}
 
@@ -105,4 +105,12 @@ class LoginForm(forms.ModelForm):
 
 	class Meta:
 		model = Paciente
+		fields = ['username', 'password']
+
+class LoginForm2(forms.ModelForm):
+	username = forms.CharField(label="Usuario")
+	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
+
+	class Meta:
+		model = Especialistas
 		fields = ['username', 'password']

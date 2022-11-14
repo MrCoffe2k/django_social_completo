@@ -9,13 +9,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
 User = get_user_model()
 
-
+def index(request):
+    context = {}
+    return render(request, 'social/index.html', context)
 
 User = settings.AUTH_USER_MODEL
 
 def feed(request):
 	posts = Post.objects.all()
-
 	context = { 'posts': posts}
 	return render(request, 'social/feed.html', context)
 
@@ -38,6 +39,8 @@ def registroStaff(request):
 		form = StaffRegisterForm(request.POST)
 		if form.is_valid():
 			user = form.save()
+			username = form.cleaned_data['correo']
+			messages.success(request, f'Usuario {username} creado')
 			return redirect('login')
 	else:
 		form = StaffRegisterForm()
@@ -57,6 +60,22 @@ def login_page(request):
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu')
+			else:
+				message = 'Login failed!'
+	return render(request, 'social/login.html', context={'form': form, 'message': message})
+
+def login_page2(request):
+	form = LoginForm2(request.POST or None)
+	message = 'hola'
+	if request.method == 'POST':
+		if form.is_valid():
+			username=form.cleaned_data.get('username')
+			password=form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				message = f'Hello {user.username}! You have been logged in'
+				login(request, user)
+				return redirect('menu2')
 			else:
 				message = 'Login failed!'
 	return render(request, 'social/login.html', context={'form': form, 'message': message})
@@ -152,6 +171,10 @@ def busquedalaboratorios(request):
 def menu(request):
 	context = {}
 	return render(request, 'social/menu.html')
+
+def menu2(request):
+	context = {}
+	return render(request, 'social/menu2.html')
 
 def citas(request):
 	context = {}

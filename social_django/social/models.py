@@ -4,9 +4,9 @@ from tabnanny import verbose
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser, UserManager
 from .widget import DatePickerInput
-
+from django.core.validators import RegexValidator
 
 
 
@@ -52,18 +52,29 @@ class Relationship(models.Model):
 		models.Index(fields=['from_user', 'to_user',]),
 		]
 
+class Especialidades(models.Model):
+	idEspecialidades = models.AutoField(primary_key=True)
+	nombre = models.CharField(max_length=30)
 
+	def __str__(self):
+		return f'{self.nombre}'
+
+	class Meta:
+		verbose_name_plural = 'Especialidades'
 class Paciente(AbstractUser):
 	idPaciente= models.AutoField(primary_key=True)
-	nombre = models.CharField(max_length=20)
-	ApellidoPaterno = models.CharField(max_length=20)
-	ApellidoMaterno = models.CharField(max_length=20)
+	nombre = models.CharField(max_length=20,null=False)
+	ApellidoPaterno = models.CharField(max_length=20,null=False)
+	ApellidoMaterno = models.CharField(max_length=20,null=False)
 	FechaNacimiento = models.DateField(null=True)
-	peso = models.FloatField(null=True)
-	altura = models.FloatField(null=True)
-	telefono = models.BigIntegerField(null=True)
-	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
-	contrasena=models.CharField(max_length=20,default='hola')
+	peso = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	altura = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	correo = models.EmailField(max_length=40, unique=True,default='example@email.com',null=False)
+	contrasena=models.CharField(max_length=128, default='hola',null=False)
+	telefono = models.CharField(max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],null=False, default='0')
+	cedulaMedica = models.CharField(max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	cedulaEspecialidad = models.CharField(max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='id',unique=False,null=True)
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -86,28 +97,13 @@ class Paciente(AbstractUser):
 		user.save(using=self._db)
 		return user
 
-class Especialidades(models.Model):
-	idEspecialidades = models.AutoField(primary_key=True)
-	nombre = models.CharField(max_length=30)
-
-	def __str__(self):
-		return f'{self.nombre}'
-
-	class Meta:
-		verbose_name_plural = 'Especialidades'
-
-
 class Especialistas(AbstractBaseUser):
 	idEspecialista = models.AutoField(primary_key=True)
 	nombre = models.CharField(max_length=20)
 	ApellidoPaterno = models.CharField(max_length=20)
 	ApellidoMaterno= models.CharField(max_length=20)
-	cedulaMedica = models.IntegerField()
-	cedulaEspecialidad = models.IntegerField()
-	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='hola')
-	correo = models.EmailField(max_length=40, unique=True)
-	password = models.CharField(max_length=20,null=False)
-	telefono = models.BigIntegerField(null=True)
+	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
+	telefono = models.CharField(max_length=10,null=True,validators=[RegexValidator(r'^\d{1,10}$')])
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -115,18 +111,7 @@ class Especialistas(AbstractBaseUser):
 	def __str__(self):
 		return f'{self.nombre, self.correo}'
 	
-	def create_superuser(self, nombre, password):
-		"""
-		Creates and saves a superuser with the given email and password.
-		"""
-		user = self.create_user(
-		nombre,
-		password=password,
-		)
-		user.staff = True
-		user.admin = True
-		user.save(using=self._db)
-		return user
+	objects = UserManager()
 
 	class Meta:
 		verbose_name_plural = "Especialistas"
