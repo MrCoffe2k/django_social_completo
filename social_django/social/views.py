@@ -56,7 +56,7 @@ def login_page(request):
 			username=form.cleaned_data.get('username')
 			password=form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)
-			if user is not None and user.is_staff:
+			if user is not None and user.is_especialista:
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu')

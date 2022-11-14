@@ -77,7 +77,7 @@ class Paciente(AbstractUser):
 	idEspecialidad = models.ForeignKey(Especialidades, on_delete=models.CASCADE,related_name='id',unique=False,null=True)
 
 	is_superuser= models.BooleanField(default=False)
-	is_staff= models.BooleanField(default=False)
+	is_especialista= models.BooleanField(default=False)
 	is_paciente= models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'correo'

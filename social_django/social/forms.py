@@ -38,7 +38,7 @@ class StaffRegisterForm(UserCreationForm):
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput)
 	telefono = forms.CharField(label='Telefono',max_length=10,validators=[RegexValidator(r'^\d{1,10}$')])
-	is_staff = forms.BooleanField(label='¿Aceptas terminos y condiciones?',initial=False,required=True)
+	is_especialista = forms.BooleanField(label='¿Aceptas terminos y condiciones?',initial=False,required=True)
 	
 	
 	class Meta:
