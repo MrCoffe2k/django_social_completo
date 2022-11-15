@@ -18,6 +18,7 @@ urlpatterns = [
 	path('follow/<str:username>/', views.follow, name='follow'),
 	path('unfollow/<str:username>/', views.unfollow, name='unfollow'),
 	path('gestionarusuario/<int:idPaciente>/', views.gestionarusuario, name='gestionarusuario'),
+	path('eliminarcuenta/<int:idPaciente>/', views.eliminarcuenta, name='eliminarcuenta'),
     path('menu/', views.menu, name='menu'),
     path('menu2/', views.menu2, name='menu2'),
     path('menu3/', views.menu3, name='menu3'),

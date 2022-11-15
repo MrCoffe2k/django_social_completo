@@ -116,3 +116,4 @@ class LoginForm2(forms.ModelForm):
 	class Meta:
 		model = Especialistas
 		fields = ['username', 'password']
+

@@ -56,15 +56,15 @@ def login_page(request):
 			username=form.cleaned_data.get('username')
 			password=form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)
-			if user is not None and user.is_especialista:
+			if user is not None and user.is_especialista and user.is_active:
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu')
-			elif user is not None and user.is_paciente:
+			elif user is not None and user.is_paciente and user.is_active:
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu2')
-			elif user is not None and user.is_superuser:
+			elif user is not None and user.is_superuser and user.is_active:
 				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu3')
@@ -138,6 +138,13 @@ def gestionarusuario(request,idPaciente):
 	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
 	form = UserRegisterForm(instance=paciente)
 	return render(request, "social/gestionarusuario.html", {"form":form})
+
+def eliminarcuenta(request,idPaciente):
+    paciente = request.user
+    paciente.is_active = False
+    paciente.save()
+    messages.success(request, 'Profile successfully disabled.')
+    return redirect('login')
 
 def actualizar_paciente(request, idPaciente):
 	paciente = Paciente.objects.get(pk=idPaciente)
