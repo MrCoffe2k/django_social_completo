@@ -134,12 +134,11 @@ def unfollow(request, username):
 	return redirect('feed')
 
 def gestionarusuario(request,idPaciente):
-
 	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
-	form = UserRegisterForm(instance=paciente)
+	form = UserForm(instance=paciente)
 	return render(request, "social/gestionarusuario.html", {"form":form})
 
-def eliminarcuenta(request,idPaciente):
+def eliminarcuenta(request):
     paciente = request.user
     paciente.is_active = False
     paciente.save()
@@ -148,7 +147,7 @@ def eliminarcuenta(request,idPaciente):
 
 def actualizar_paciente(request, idPaciente):
 	paciente = Paciente.objects.get(pk=idPaciente)
-	form = UserRegisterForm(request.POST, instance=paciente)
+	form = UserForm(request.POST, instance=paciente)
 	if form.is_valid():
 		form.save()
 	return render(request, "social/feed.html", {"paciente":paciente})
