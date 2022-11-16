@@ -79,10 +79,7 @@ class Consulta(forms.ModelForm):
 	peso = forms.FloatField(label="Peso")
 	altura = forms.FloatField(label="Altura")
 	edad = forms.IntegerField(label = "Edad")
-	doctor = forms.ModelChoiceField(
-    queryset=Paciente.objects.all(),
-    label='Doctor',
-    widget=forms.Select)
+	doctor = forms.CharField(label="doctor")
 
 	class Meta:
 		model= Consultas

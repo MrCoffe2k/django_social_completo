@@ -152,9 +152,10 @@ def actualizar_paciente(request, idPaciente):
 		form.save()
 	return render(request, "social/feed.html", {"paciente":paciente})
 
-def creacionconsulta(request):
+def creacionconsulta(request, idPaciente):
 	if request.method == 'POST':
-		form = Consulta(request.POST)
+		paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
+		
 		if form.is_valid():
 			form.save()
 			return redirect('feed')

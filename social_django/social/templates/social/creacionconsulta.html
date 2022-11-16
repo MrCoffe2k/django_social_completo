@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="{% url 'creacionconsulta' %}"class="form" method="post">
+<form action="{% url 'creacionconsulta' user.idPaciente %}"class="form" method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
 
