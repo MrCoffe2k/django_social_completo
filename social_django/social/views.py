@@ -157,7 +157,7 @@ def creacionconsulta(request):
 		form = Consulta(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('feed')
+			return redirect('creacionconsulta')
 	else:
 		form = Consulta()
 
@@ -207,6 +207,18 @@ def creacionexpediente(request):
 	context = { 'Consulta': Consultas}
 	return render(request, 'social/creacionexpediente.html', context)
 
+def expediente(request):
+	if request.method == "POST":
+		busqueda = request.POST['busqueda']
+		consultas = Consultas.objects.filter(nombre__contains=busqueda)
+		return render(request,'social/expediente.html', {'busqueda':busqueda}, {'consultas':consultas})
+	else:
+		return render(request,'social/expediente.html')
+
+def busquedaexpediente(request):
+	context = {}
+	return render(request, 'social/busquedaexpediente.html')
+	
 def asignarlaboratorio(request):
 	context = {}
 	return render(request, 'social/asignarlaboratorio.html')
@@ -215,9 +227,6 @@ def visualizacionderesultados(request):
 	context = {}
 	return render(request, 'social/visualizacionderesultados.html')
 
-def busquedaexpediente(request):
-	context = {}
-	return render(request, 'social/busquedaexpediente.html')
 
 def staff(request):
 	return render(request,'social/menu.html')

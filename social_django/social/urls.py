@@ -33,6 +33,7 @@ urlpatterns = [
 	path('asignarlaboratorio/', views.asignarlaboratorio, name='asignarlaboratorio'),
 	path('visualizacionderesultados/', views.visualizacionderesultados, name='visualizacionderesultados'),
 	path('busquedaexpediente/', views.busquedaexpediente, name='busquedaexpediente'),
+	path('expediente/', views.expediente, name='expediente'),
 	
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

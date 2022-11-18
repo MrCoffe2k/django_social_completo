@@ -40,7 +40,17 @@
 		
 		<nav class="second-nav">
 			{% if request.user.is_authenticated %}
+			{% if request.user.is_especialista %}
 			<a class="feed" href="{% url 'menu' %}">Inicio</a>
+			{% else %}
+			{% if request.user.is_paciente %}
+			<a class="feed" href="{% url 'menu2' %}">Inicio</a>
+			{% else %}
+			{% if request.user.is_superuser %}
+			<a class="feed" href="{% url 'menu3' %}">Inicio</a>
+			{% endif %}
+			{% endif %}
+			{% endif %}
 			{% endif %}
 		</nav>
 

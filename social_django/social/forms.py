@@ -44,7 +44,7 @@ class StaffRegisterForm(UserCreationForm):
 	
 	class Meta:
 		model = Paciente
-		fields =['nombre','ApellidoPaterno','ApellidoMaterno','cedulaMedica','cedulaEspecialidad','telefono','correo','password1','password2','is_staff']
+		fields =['nombre','ApellidoPaterno','ApellidoMaterno','cedulaMedica','cedulaEspecialidad','telefono','correo','password1','password2','is_especialista']
 		help_texts = {k:"" for k in fields}
 
 class UserForm(forms.ModelForm):
@@ -80,9 +80,7 @@ class Consulta(forms.ModelForm):
 	altura = forms.FloatField(label="Altura")
 	edad = forms.IntegerField(label = "Edad")
 	doctor = forms.ModelChoiceField(
-    queryset=Paciente.objects.all(),
-    label='Doctor',
-    widget=forms.Select)
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
 
 	class Meta:
 		model= Consultas
