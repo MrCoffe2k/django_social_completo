@@ -160,8 +160,8 @@ class Consultas(models.Model):
 	fecha = models.DateField()
 	nombre = models.CharField(max_length=100, default='Nombre')
 	edad = models.IntegerField(default=0)
-	peso = models.FloatField(default=0)
-	altura = models.FloatField()
+	peso = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	altura = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
 	doctor = models.TextField(max_length=100, default='Doctor')
 
 	def __str__(self):
