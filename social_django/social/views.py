@@ -147,8 +147,6 @@ def eliminarcuenta(request):
 
 def creacionconsulta(request):
 	if request.method == 'POST':
-		paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
-		
 		if form.is_valid():
 			form.save()
 			return redirect('creacionconsulta')
