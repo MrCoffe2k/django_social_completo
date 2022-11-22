@@ -8,15 +8,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Busca Lab</title>
+    <title>Busca Laboratorios</title>
 </head>
 <body>
     <div class="dropdown">
+        <div class="form"></div>
         <input class="text-box" type="text" placeholder="Seleccionar" readonly>
-        <div class="options">
-          <div onclick="show('HTML')">HTML</div>
-          <div onclick="show('CSS')">CSS</div>
-        </div>
+        <form action = "{% url 'busquedalaboratorios'  %}" method="POST">
+            <div class="options">
+                
+            </div>    
+        </form>
     </div>
     <script src="{% static 'functions.js' %}"></script>    
 </body>

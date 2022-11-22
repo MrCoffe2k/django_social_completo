@@ -18,7 +18,8 @@
     
             <div class="btn-group">
                 
-                <button><a href="{% url 'citas' %}">Asignar estudio</a></button>
+                <button><a href="{% url 'citas' %}">Agendar cita</a></button>
+                <button><a href="{% url 'asignarlaboratorio' %}">Asignar estudio</a></button>
                 <button><a href="{% url 'gestionarusuario' user.idPaciente %}">Gestionar usuario</a></button> 
                 <button><a href="{% url 'busquedalaboratorios' %}">Buscar estudios</a></button>
                 <button><a href="{% url 'visualizacionderesultados' %}">Visualizar resultados de estudios</a></button>

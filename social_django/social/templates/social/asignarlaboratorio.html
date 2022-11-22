@@ -7,6 +7,12 @@
     <title>Asignar laboratorio</title>
 </head>
 <body>
-    
+    <form action="{% url 'catalogolaboratorios' user.idPaciente %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Registrar</button>
+	</form>
+	
 </body>
 </html>
