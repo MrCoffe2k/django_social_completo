@@ -129,7 +129,7 @@ class Especialidades:
 		fields =['nombre']
 
 class LoginForm(forms.ModelForm):
-	username = forms.CharField(label="Usuario")
+	username = forms.CharField(label="Correo")
 	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
 
 	class Meta:

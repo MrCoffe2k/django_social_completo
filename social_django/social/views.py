@@ -220,7 +220,6 @@ def visualizacionderesultados(request):
 	context = {}
 	return render(request, 'social/visualizacionderesultados.html')
 
-
 def staff(request):
 	return render(request,'social/menu.html')
 
