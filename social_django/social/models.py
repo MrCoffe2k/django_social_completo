@@ -67,8 +67,8 @@ class Paciente(AbstractUser):
 	ApellidoPaterno = models.CharField(max_length=20,null=False)
 	ApellidoMaterno = models.CharField(max_length=20,null=False)
 	FechaNacimiento = models.DateField(null=True)
-	peso = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
-	altura = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	peso = models.PositiveIntegerField(validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	altura = models.PositiveIntegerField(validators=[RegexValidator(r'^\d{1,10}$')],null=True)
 	correo = models.EmailField(max_length=40, unique=True,default='example@email.com',null=False)
 	contrasena=models.CharField(max_length=128, default='hola',null=False)
 	telefono = models.CharField(max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],null=False, default='0')
@@ -86,7 +86,7 @@ class Paciente(AbstractUser):
 		verbose_name_plural ="Pacientes"
 
 	def __str__(self):
-		return f'{self.nombre, self.correo}'
+		return f'{self.nombre}'
 
 	def create_superuser(self, nombre, password):
 		"""
@@ -108,7 +108,6 @@ class Especialistas(AbstractBaseUser):
 	ApellidoMaterno= models.CharField(max_length=20)
 	correo = models.EmailField(max_length=40, unique=True,default='example@email.com')
 	telefono = models.CharField(max_length=10,null=True,validators=[RegexValidator(r'^\d{1,10}$')])
-
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
 
@@ -157,11 +156,11 @@ class Peso(models.Model):
 class Consultas(models.Model):
 	idConsultas = models.AutoField(primary_key=True)
 	motivo = models.CharField(max_length=300)
-	fecha = models.DateField()
+	fecha = models.DateField(null=True)
 	nombre = models.CharField(max_length=100, default='Nombre')
-	edad = models.IntegerField(default=0)
-	peso = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
-	altura = models.CharField(max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	edad = models.PositiveIntegerField(default=0)
+	peso = models.PositiveIntegerField(validators=[RegexValidator(r'^\d{1,10}$')],null=True)
+	altura = models.PositiveIntegerField(validators=[RegexValidator(r'^\d{1,10}$')],null=True)
 	doctor = models.TextField(max_length=100, default='Doctor')
 
 	def __str__(self):

@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 User = get_user_model()
 
 def index(request):
@@ -145,11 +147,14 @@ def eliminarcuenta(request):
     messages.success(request, 'Profile successfully disabled.')
     return redirect('login')
 
-def creacionconsulta(request):
+def creacionconsulta(request,idPaciente):
 	if request.method == 'POST':
+		especialista = Paciente.objects.get(pk=idPaciente)
+		form = Consulta(request.POST)
 		if form.is_valid():
+			Consultas.objects.create(nombre = especialista.nombre)
 			form.save()
-			return redirect('creacionconsulta')
+			return redirect('menu')
 	else:
 		form = Consulta()
 
