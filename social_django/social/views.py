@@ -38,10 +38,10 @@ def registroStaff(request):
 	if request.method == 'POST':
 		form = StaffRegisterForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			form.save()
 			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
-			return redirect('login')
+			return redirect('menu3')
 	else:
 		form = StaffRegisterForm()
 
@@ -50,43 +50,24 @@ def registroStaff(request):
 
 def login_page(request):
 	form = LoginForm(request.POST or None)
-	message = 'hola'
 	if request.method == 'POST':
 		if form.is_valid():
 			username=form.cleaned_data.get('username')
 			password=form.cleaned_data.get('password')
 			user = authenticate(username=username, password=password)
 			if user is not None and user.is_especialista and user.is_active:
-				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu')
 			elif user is not None and user.is_paciente and user.is_active:
-				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu2')
 			elif user is not None and user.is_superuser and user.is_active:
-				message = f'Hello {user.username}! You have been logged in'
 				login(request, user)
 				return redirect('menu3')
 			else:
-				message = 'Login failed!'
-	return render(request, 'social/login.html', context={'form': form, 'message': message})
+				messages.error(request, 'Correo o contraseña incorrectos')
+	return render(request, 'social/login.html', context={'form': form})
 
-def login_page2(request):
-	form = LoginForm2(request.POST or None)
-	message = 'hola'
-	if request.method == 'POST':
-		if form.is_valid():
-			username=form.cleaned_data.get('username')
-			password=form.cleaned_data.get('password')
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				message = f'Hello {user.username}! You have been logged in'
-				login(request, user)
-				return redirect('menu2')
-			else:
-				message = 'Login failed!'
-	return render(request, 'social/login.html', context={'form': form, 'message': message})
 
 def post(request):
 	current_user = get_object_or_404(User, pk=request.user.pk)
@@ -133,10 +114,29 @@ def unfollow(request, username):
 	messages.success(request, f'Ya no sigues a {username}')
 	return redirect('feed')
 
-def gestionarusuario(request,idPaciente):
+def gestionarpaciente(request,idPaciente):
 	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
-	form = UserForm(instance=paciente)
-	return render(request, "social/gestionarusuario.html", {"form":form})
+	form = PacienteForm(instance=paciente)
+	return render(request, "social/gestionarpaciente.html", {"form":form})
+
+def actualizarpaciente(request, idPaciente):
+	paciente = Paciente.objects.get(pk=idPaciente)
+	form = PacienteForm(request.POST, instance=paciente)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/feed.html", {"paciente":paciente})
+
+def gestionarstaff(request,idPaciente):
+	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
+	form = StaffForm(instance=paciente)
+	return render(request, "social/gestionarstaff.html", {"form":form})
+
+def actualizarstaff(request, idPaciente):
+	paciente = Paciente.objects.get(pk=idPaciente)
+	form = StaffForm(request.POST, instance=paciente)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/feed.html", {"paciente":paciente})
 
 def eliminarcuenta(request):
     paciente = request.user
@@ -144,13 +144,6 @@ def eliminarcuenta(request):
     paciente.save()
     messages.success(request, 'Profile successfully disabled.')
     return redirect('login')
-
-def actualizar_paciente(request, idPaciente):
-	paciente = Paciente.objects.get(pk=idPaciente)
-	form = UserForm(request.POST, instance=paciente)
-	if form.is_valid():
-		form.save()
-	return render(request, "social/feed.html", {"paciente":paciente})
 
 def creacionconsulta(request):
 	if request.method == 'POST':
