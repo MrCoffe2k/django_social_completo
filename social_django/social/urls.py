@@ -7,15 +7,10 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
 	path('', views.login_page, name='feed'),
-	path('profile/', views.profile, name='profile'),
-	path('profile/<str:username>/', views.profile, name='profile'),
 	path('registroPaciente/', views.registroPaciente, name='registroPaciente'),
 	path('registroStaff/', views.registroStaff, name='registroStaff'),
 	path('login_page/', views.login_page, name='login'),
 	path('logout/', LogoutView.as_view(template_name='social/logout.html'), name='logout'),
-	path('post/', views.post, name='post'),
-	path('follow/<str:username>/', views.follow, name='follow'),
-	path('unfollow/<str:username>/', views.unfollow, name='unfollow'),
 	path('gestionarpaciente/<int:idPaciente>/', views.gestionarpaciente, name='gestionarpaciente'),
 	path('actualizarpaciente/<int:idPaciente>/', views.actualizarpaciente, name='actualizarpaciente'),
 	path('gestionarstaff/<int:idPaciente>/', views.gestionarstaff, name='gestionarstaff'),
@@ -36,5 +31,4 @@ urlpatterns = [
 	path('busquedaexpediente/', views.busquedaexpediente, name='busquedaexpediente'),
 	path('expediente/', views.expediente, name='expediente'),
 	
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
