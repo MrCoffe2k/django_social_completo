@@ -150,6 +150,7 @@ def creacionconsulta(request):
 		form = Consulta(request.POST)
 		if form.is_valid():
 			form.save()
+			messages.success(request, f'Consulta creada')
 			return redirect('creacionconsulta')
 	else:
 		form = Consulta()
