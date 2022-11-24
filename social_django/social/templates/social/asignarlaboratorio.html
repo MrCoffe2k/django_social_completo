@@ -1,18 +1,23 @@
+{% extends 'social/layout.html' %}
+{% include 'social/busquedaexpediente.html' %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asignar laboratorio</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Asignar Laboratorio</title>
 </head>
 <body>
-    <form action="{% url 'catalogolaboratorios' user.idPaciente %}"class="form" method="post">
+    <form action="{% url 'asignarlaboratorio' %}"class="form" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 	
 		<button type="submit" id="submit">Registrar</button>
 	</form>
-	
 </body>
 </html>
+{% endblock %}

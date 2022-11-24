@@ -145,12 +145,12 @@ class LoginForm2(forms.ModelForm):
 		fields = ['username', 'password']
 
 class Laboratorios(forms.ModelForm):
-	laboratorio= forms.CharField(label="Nombre del estudio")
-	muestra = forms.FloatField(label="Numero de muestra")
-	#estudio = forms.ModelChoiceField(queryset=Estudios.objects.select_related(), empty_label=None)
-	#paciente = forms.ModelChoiceField(queryset=Paciente.objects.select_related(), empty_label=None)
-	
+	Estudio= forms.ModelChoiceField(
+    queryset=Estudios.objects.all(),label='Estudios',widget=forms.Select)
+	Muestra = forms.FloatField(label="Numero de muestra")
+	Paciente = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select)
 	class Meta:
 		model= Laboratorio
-		fields=['laboratorio','muestra']
+		fields=['Estudio','Muestra']
 

@@ -86,7 +86,7 @@ class Paciente(AbstractUser):
 		verbose_name_plural ="Pacientes"
 
 	def __str__(self):
-		return f'{self.nombre}'
+		return f'{self.nombre, self.ApellidoPaterno, self.ApellidoMaterno}'
 
 	def create_superuser(self, nombre, password):
 		"""
@@ -138,7 +138,7 @@ class Estudios(models.Model):
 	analiza = models.CharField(max_length=300)
 
 	def __str__(self):
-		return f'{self.nombre, self.precio, self.requisitos, self.tiempoAplicacion, self.analiza}'
+		return f'{self.nombre}'
 
 	class Meta:
 		verbose_name_plural = "Estudios"
@@ -181,9 +181,9 @@ class Altura(models.Model):
 
 class Laboratorio(models.Model):
 	idLaboratorio = models.AutoField(primary_key=True)
-	idMuestra = models.IntegerField()
-	idPaciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
-	idEstudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
+	Muestra = models.IntegerField()
+	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
+	Estudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
 
 	def __str__(self):
 		return f'{self.idMuestra}'

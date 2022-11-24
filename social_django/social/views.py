@@ -120,7 +120,7 @@ def catalogolaboratorios(request):
 		form = Catalogo(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('feed')
+			return redirect('menu')
 	else:
 		form = Catalogo()
 
@@ -169,21 +169,18 @@ def busquedaexpediente(request):
 	context = {}
 	return render(request, 'social/busquedaexpediente.html')
 	
-def asignarlaboratorio(request, idPaciente):
-	if request.method == 'POST':
-		paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
-		form = Laboratorios(request.POST, instance=paciente)
-		#estudio = Estudios.objects.filter(labortorio = Estudio)
+def asignarlaboratorio(request):
+	if request.method == "POST":
+		form = Laboratorios(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('feed')
+			messages.success(request, f'Estudio asignado')
+			return redirect('menu')
 	else:
-		form = asignarlaboratorio()
+		form = Laboratorios()
 
 	context = { 'form' : form }
-	return render(request, "social/asignarlaboratorios.html", context, {"paciente":paciente, })
-		
-	#return render(request, "social/asignarlaboratorio.html", {"paciente":paciente, "estudio":estudio})
+	return render(request, 'social/asignarlaboratorio.html', context)
 
 def visualizacionderesultados(request):
 	context = {}
