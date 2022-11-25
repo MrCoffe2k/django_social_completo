@@ -139,10 +139,10 @@ def actualizarstaff(request, idPaciente):
 	return render(request, "social/feed.html", {"paciente":paciente})
 
 def eliminarcuenta(request):
-    paciente = request.user
-    paciente.is_active = False
-    paciente.save()
-    messages.success(request, 'Profile successfully disabled.')
+    user_pk = request.user.pk
+    User = get_user_model()
+    User.objects.filter(pk=user_pk).update(is_active=False)
+    messages.success(request, 'Perfil eliminado')
     return redirect('login')
 
 def creacionconsulta(request):

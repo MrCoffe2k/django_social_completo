@@ -73,7 +73,6 @@ class StaffForm(forms.ModelForm):
 	correo = forms.EmailField(label='Correo',max_length=40,required=True)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(render_value=True, attrs={'placeholder': '••••••••••••••••••••••••'}),required=False)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput(render_value=True, attrs={'placeholder': '••••••••••••••••••••••••'}),required=False)
-
 	class Meta:
 		model = Paciente
 		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','telefono','cedulaMedica','cedulaEspecialidad','correo','password1','password2']
