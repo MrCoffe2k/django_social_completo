@@ -136,7 +136,7 @@ class LoginForm2(forms.ModelForm):
 class Laboratorios(forms.ModelForm):
 	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select)
 	Paciente = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select)
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select(attrs={'class': 'choice'}))
 	Muestra = forms.FloatField(label="Numero de muestra")
 	class Meta:
 		model= Laboratorio
@@ -156,7 +156,7 @@ class Horarios(forms.ModelForm):
 	horaInicio = forms.TimeField(widget=TimePickerInput)
 	horaFinal = forms.TimeField(widget=TimePickerInput)
 	especialista = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 	class Meta:
 		model= Horarios
 		fields=['especialista','dia','horaInicio','horaFinal']
