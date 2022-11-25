@@ -102,12 +102,10 @@ def eliminarcuenta(request):
     messages.success(request, 'Perfil eliminado')
     return redirect('login')
 
-def creacionconsulta(request,idPaciente):
+def creacionconsulta(request):
 	if request.method == 'POST':
-		especialista = Paciente.objects.get(pk=idPaciente)
 		form = Consulta(request.POST)
 		if form.is_valid():
-			Consultas.objects.create(nombre = especialista.nombre)
 			form.save()
 			messages.success(request, f'Consulta creada')
 			return redirect('creacionconsulta')
