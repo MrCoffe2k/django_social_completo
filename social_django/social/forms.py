@@ -116,12 +116,12 @@ class Catalogo(forms.ModelForm):
 
 
 class busquedalaboratorios(forms.ModelForm):
-	opciones = forms.ModelChoiceField(queryset=Estudios.objects.all(), empty_label=None)
+	nombre = forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ), empty_label=None)
 
 	class Meta:
 		model= Estudios
-		fields = '__all__'
-class Especialidades:
+		fields = ['nombre']
+class EspecialidadesForm(forms.ModelForm):
 	nombre = forms.CharField(label='Nombre')
 
 	class Meta:
@@ -145,12 +145,30 @@ class LoginForm2(forms.ModelForm):
 		fields = ['username', 'password']
 
 class Laboratorios(forms.ModelForm):
-	Estudio= forms.ModelChoiceField(
-    queryset=Estudios.objects.all(),label='Estudios',widget=forms.Select)
-	Muestra = forms.FloatField(label="Numero de muestra")
+	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select)
 	Paciente = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select)
+	Muestra = forms.FloatField(label="Numero de muestra")
 	class Meta:
 		model= Laboratorio
-		fields=['Estudio','Muestra']
+		fields=['Estudio','Paciente','Muestra']
+
+class Horarios(forms.ModelForm):
+	DIAS = (
+        (1,'Lunes'),
+        (2,'Martes'),
+        (3,'Miercoles'),
+        (4,'Jueves'),
+        (5,'Viernes'),
+        (6,'Sabado'),
+        (7,'Domingo'),
+    )
+	dia =  forms.ChoiceField(choices=DIAS)
+	horaInicio = forms.TimeField(widget=TimePickerInput)
+	horaFinal = forms.TimeField(widget=TimePickerInput)
+	especialista = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
+	class Meta:
+		model= Horarios
+		fields=['especialista','dia','horaInicio','horaFinal']
 

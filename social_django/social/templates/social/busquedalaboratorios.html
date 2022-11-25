@@ -1,26 +1,26 @@
 {% extends 'social/layout.html' %}
+{% include 'social/busquedalaboratorios.html' %}
 {% block content %}
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Busca Laboratorios</title>
+    <title>Expediente</title>
 </head>
 <body>
-    <div class="dropdown">
-        <div class="form"></div>
-        <input class="text-box" type="text" placeholder="Seleccionar" readonly>
-        <form action = "{% url 'busquedalaboratorios'  %}" method="POST">
-            <div class="options">
-                
-            </div>    
-        </form>
-    </div>
-    <script src="{% static 'functions.js' %}"></script>    
+    <form action="{% url 'busquedalaboratorios' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Buscar</button>
+
+    
+	</form>
 </body>
 </html>
 {% endblock %}
+

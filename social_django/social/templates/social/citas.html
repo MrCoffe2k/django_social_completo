@@ -1,25 +1,23 @@
 {% extends 'social/layout.html' %}
+{% include 'social/citas.html' %}
 {% block content %}
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Citas</title>
+    <title>Agendar citas</title>
 </head>
 <body>
-    <h1>Agendar o editar una cita</h1>
-    <div class="dropdown">
-        <input class="text-box" type="text" placeholder="Seleccionar" readonly>
-        <div class="options">
-          <div onclick="show('HTML')">Agendar</div>
-          <div onclick="show('CSS')">Editars</div>
-        </div>
-    </div>
-    <script src="{% static 'functions.js' %}"></script>    
+    <form action="{% url 'citas' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Agendar</button>
+	</form>
 </body>
 </html>
 {% endblock %}

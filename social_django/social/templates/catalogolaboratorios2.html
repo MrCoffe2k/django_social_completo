@@ -1,0 +1,11 @@
+{% extends 'social/layout.html' %}
+
+{% block content %}
+
+<form action="{% url 'catalogolaboratorios2' Estudios.idEstudios %}"class="form" method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+
+</form>
+
+{% endblock %}

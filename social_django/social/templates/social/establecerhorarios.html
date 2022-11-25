@@ -1,24 +1,25 @@
 {% extends 'social/layout.html' %}
+{% include 'social/establecerhorarios.html' %}
 {% block content %}
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Establecer horarios</title>
+    <title>Expediente</title>
 </head>
 <body>
-    <div class="dropdown">
-        <input class="text-box" type="text" placeholder="Seleccionar" readonly>
-        <div class="options">
-          <div onclick="show('HTML')">HTML</div>
-          <div onclick="show('CSS')">CSS</div>
-        </div>
-    </div>
-    <script src="{% static 'functions.js' %}"></script>    
+    <form action="{% url 'establecerhorarios' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Guardar</button>
+
+    
+	</form>
 </body>
 </html>
 {% endblock %}

@@ -120,18 +120,36 @@ def catalogolaboratorios(request):
 		form = Catalogo(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('menu')
+			messages.success(request, f"Laboratorio Creado")
+			return redirect('catalogolaboratorios')
 	else:
 		form = Catalogo()
 
 	context = { 'form' : form }
 	return render(request, "social/catalogolaboratorios.html", context)
 
-def busquedalaboratorios(request):
-	
-	context = {}
-	return render(request, "social/busquedalaboratorios.html")
-	
+def listadesplegable(request):
+	if request.method=='POST':
+		form = busquedalaboratorios(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('catalogolaboratorios2' , Estudios.objects.all().last())
+	else:
+		form = busquedalaboratorios()
+
+	context = {'form': form}
+	return render(request, "social/busquedalaboratorios.html", context)
+
+def busquedalaboratorio2(request, nombre):
+	estudio = Estudios.objects.filter(nombre=nombre).first()
+	form = Catalogo(instance=estudio)
+	return render(request, "social/busquedalaboratorios.html",  {"form":form})
+
+def mostrarlaboratorio(request, nombre):
+	estudio = Estudios.objects.get(nombre=nombre)
+	form = Catalogo(request.POST, instance=estudio)
+	return render(request, "social/menu.html", {"Estudio":estudio})
+
 def menu(request):
 	context = {}
 	return render(request, 'social/menu.html')
@@ -148,9 +166,6 @@ def citas(request):
 	context = {}
 	return render(request, 'social/citas.html')
 
-def establecerhorarios(request):
-	context = {}
-	return render(request, 'social/establecerhorarios.html')
 	
 def creacionexpediente(request):
 	posts = Consultas.objects.all()
@@ -191,3 +206,42 @@ def staff(request):
 
 def paciente(request):
 	return render(request,'social/menu2.html')
+
+def horariosEspecialistas(request):
+	if request.method == "POST":
+		form = Horarios(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Horario guardado')
+			return redirect('establecerhorarios')
+	else:
+		form = Horarios()
+
+	context = { 'form' : form }
+	return render(request, 'social/establecerhorarios.html', context)
+
+def registrarEspecialidades(request):
+	if request.method == "POST":
+		form = EspecialidadesForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Especialidad Registrada')
+			return redirect('registroEspecialidades')
+	else:
+		form = EspecialidadesForm()
+
+	context = { 'form' : form }
+	return render(request, 'social/registroEspecialidades.html', context)
+
+def agendarCitas(request):
+	if request.method == "POST":
+		form = EspecialidadesForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Especialidad Registrada')
+			return redirect('registroEspecialidades')
+	else:
+		form = EspecialidadesForm()
+
+	context = { 'form' : form }
+	return render(request, 'social/registroEspecialidades.html', context)
