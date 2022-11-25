@@ -5,8 +5,12 @@
 <form action="{% url 'actualizarpaciente' user.idPaciente %}"class="form" method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<button type="submit" id="submit" action="{% url 'eliminarcuenta' user.idPaciente %}"class="form" method="post">Eliminar cuenta</button>
 	<button type="submit" id="submit">Guardar</button>
+</form>
+
+<form action="{% url 'eliminarcuenta' %}" method="post">
+	{% csrf_token %}
+	<button type="submit" id="submit">Eliminar cuenta</button>
 </form>
 
 {% endblock %}

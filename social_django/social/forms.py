@@ -7,7 +7,7 @@ from django.contrib.auth.forms import *
 from .models import *
 from .widget import *
 from django.contrib.auth.hashers import *
-from django.core.validators import RegexValidator
+from django.core.validators import *
 
 class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20,required=True)
@@ -73,18 +73,10 @@ class StaffForm(forms.ModelForm):
 	correo = forms.EmailField(label='Correo',max_length=40,required=True)
 	password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(render_value=True, attrs={'placeholder': '••••••••••••••••••••••••'}),required=False)
 	password2 = forms.CharField(label='Confirmar Contraseña', widget=forms.PasswordInput(render_value=True, attrs={'placeholder': '••••••••••••••••••••••••'}),required=False)
-
 	class Meta:
 		model = Paciente
 		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','telefono','cedulaMedica','cedulaEspecialidad','correo','password1','password2']
 		help_texts = {k:"" for k in fields}
-
-class PostForm(forms.ModelForm):
-	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': '¿Qué está pasando?'}), required=True)
-
-	class Meta:
-		model = Post
-		fields = ['content']
 
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Observaciones'}), required=True)
@@ -94,15 +86,12 @@ class Consulta(forms.ModelForm):
 	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Altura(cm)'}))
 	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Edad'}))
 	doctor = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 
 	class Meta:
 		model= Consultas
 		fields=['fecha','doctor','nombre','edad','peso','altura','motivo']
-
-		widgets = {
-            'fecha' : DatePickerInput(),
-        }
+		help_texts = {k:"" for k in fields}
 
 class Catalogo(forms.ModelForm):
 	nombre= forms.CharField(label="Nombre del estudio")
