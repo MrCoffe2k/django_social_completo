@@ -78,13 +78,6 @@ class StaffForm(forms.ModelForm):
 		fields =['nombre','ApellidoPaterno','ApellidoMaterno','FechaNacimiento','telefono','cedulaMedica','cedulaEspecialidad','correo','password1','password2']
 		help_texts = {k:"" for k in fields}
 
-class PostForm(forms.ModelForm):
-	content = forms.CharField(label='', widget=forms.Textarea(attrs={'rows':2, 'placeholder': '¿Qué está pasando?'}), required=True)
-
-	class Meta:
-		model = Post
-		fields = ['content']
-
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Observaciones'}), required=True)
 	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
