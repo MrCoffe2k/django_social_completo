@@ -7,7 +7,7 @@ from django.contrib.auth.forms import *
 from .models import *
 from .widget import *
 from django.contrib.auth.hashers import *
-from django.core.validators import RegexValidator
+from django.core.validators import *
 
 class UserRegisterForm(UserCreationForm):
 	nombre = forms.CharField(label='Nombre',max_length=20,required=True)
@@ -86,7 +86,7 @@ class Consulta(forms.ModelForm):
 	altura = forms.FloatField(label="Altura")
 	edad = forms.IntegerField(label = "Edad")
 	doctor = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 
 	class Meta:
 		model= Consultas
