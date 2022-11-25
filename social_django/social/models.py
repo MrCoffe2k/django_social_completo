@@ -167,7 +167,9 @@ class Consultas(models.Model):
 	def __str__(self):
 		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura, self.doctor}'
 	class Meta:
-		verbose_name_plural = "Consultas"
+		verbose_name = 'consultas'
+		verbose_name_plural = 'consultas'
+
 class Altura(models.Model):
 	idAltura = models.AutoField(primary_key=True)
 	altura = models.FloatField()

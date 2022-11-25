@@ -13,15 +13,11 @@
 </head>
 <body>
     <h1 class="t1">Expediente</h1>
-    {% if busqueda %}
-    <h2>Paciente: {{busqueda}}</h2>
+    <h2 class="t2">Paciente: {{request.GET.busqueda}}</h2>
     <br>
-    {% for consultas in consultas%}
-    {{consultas.all}} <br>
-    {% endfor %}
-    {% else %}
-    <h2>Primero busca un paciente</h2>
-    {% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{consultas}}
 </body>
 </html>
 {% endblock %}

@@ -91,10 +91,7 @@ class Consulta(forms.ModelForm):
 	class Meta:
 		model= Consultas
 		fields=['fecha','doctor','nombre','edad','peso','altura','motivo']
-
-		widgets = {
-            'fecha' : DatePickerInput(),
-        }
+		help_texts = {k:"" for k in fields}
 
 class Catalogo(forms.ModelForm):
 	nombre= forms.CharField(label="Nombre del estudio")

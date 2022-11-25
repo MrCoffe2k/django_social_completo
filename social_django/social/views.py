@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login, authenticate
+from django.http import *
 User = get_user_model()
 
 def index(request):
@@ -156,12 +157,15 @@ def creacionexpediente(request):
 	return render(request, 'social/creacionexpediente.html', context)
 
 def expediente(request):
-	if request.method == "POST":
-		busqueda = request.POST['busqueda']
-		consultas = Consultas.objects.filter(nombre__contains=busqueda)
-		return render(request,'social/expediente.html', {'busqueda':busqueda}, {'consultas':consultas})
-	else:
-		return render(request,'social/expediente.html')
+	if 'term' in request.GET:
+		qs = Consultas.objects.filter(nombre__contains=request.GET.get('term'))
+		nombres = list()
+		for consultas in qs:
+			nombres.append(consultas.nombre)
+			return JsonResponse(nombres, safe=False)
+	busqueda = request.GET['busqueda']
+	consultas = Consultas.objects.filter(nombre__contains=busqueda)
+	return render(request,'social/expediente.html', {'consultas':consultas})
 
 def busquedaexpediente(request):
 	context = {}
