@@ -1,0 +1,29 @@
+{% extends 'social/creacionconsulta.html' %}
+{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creacion de expediente Medico</title>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'normalize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <form action="{% url 'Consulta' user.idPaciente %}"class="form" method="post"></form>
+
+    <h1 class="t1">Expediente Medico</h1><br>
+        <textarea>
+        
+        <th><h2><p style="color:white;"><b>Nombre </b></p></h2></th>
+ 
+        <p align="center">{{form.Consulta}}</p>
+
+        </textarea>
+
+</body>
+</html>
+{% endblock %}

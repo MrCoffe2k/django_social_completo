@@ -2,11 +2,10 @@
 
 {% block content %}
 
-<form method="post">
+<form action="{% url 'catalogolaboratorios2' Estudios.idEstudios %}"class="form" method="post">
 	{% csrf_token %}
 	{{ form.as_p }}
-	<button type="submit" class="post" id="" >Post!</button>
-	
+
 </form>
 
 {% endblock %}

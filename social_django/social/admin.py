@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Horarios,Altura, Citas, Consultas, Especialidades, Especialistas, Estudios, Laboratorio, Paciente, Peso, Post, Profile, Relationship, Resultados_Lab
+from .models import *
 
 # Register your models here.
 admin.site.register(Profile)
@@ -15,7 +15,9 @@ admin.site.register(Peso)
 admin.site.register(Consultas)
 admin.site.register(Altura)
 admin.site.register(Laboratorio)
-
 admin.site.register(Citas)
+admin.site.register(RolesUsuarios)
 
-
+admin.site.site_header = 'Agenda de Control Medico'
+admin.site.index_title = 'Panel de control ACM'
+admin.site.site_title = 'Administración'

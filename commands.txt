@@ -9,3 +9,4 @@ pip freeze > requirements.txt		//Esto es para crear los requerimientos del entro
 
 py manage.py makemigrations     //guardar los cambios
 py manage.py migrate        //subir los cambios a la base de datos
+pipenv install django-material-admin

@@ -8,10 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Logout</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <title>Busqueda de expediente</title>
 </head>
 <body>
-    <h1 class="t1">Sesión cerrada</h1>
-</body>
+    <h1 class="t1">Creacion de consulta</h1>
+    <form action="{% url 'creacionconsulta' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Guardar</button>
+	</form>
 </html>
 {% endblock %}

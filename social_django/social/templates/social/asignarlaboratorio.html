@@ -1,4 +1,5 @@
 {% extends 'social/layout.html' %}
+{% include 'social/asignarlaboratorio.html' %}
 {% block content %}
 <!DOCTYPE html>
 {% load static %}
@@ -8,10 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Logout</title>
+    <title>Asignar Laboratorio</title>
 </head>
 <body>
-    <h1 class="t1">Sesión cerrada</h1>
+    <form action="{% url 'asignarlaboratorio' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Registrar</button>
+	</form>
 </body>
 </html>
 {% endblock %}

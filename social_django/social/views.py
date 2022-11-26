@@ -1,83 +1,250 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from .forms import UserRegisterForm, PostForm
+from .forms import *
+from django import forms
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth import login, authenticate
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.http import *
+User = get_user_model()
+
+def index(request):
+    context = {}
+    return render(request, 'social/index.html', context)
+
+User = settings.AUTH_USER_MODEL
 
 def feed(request):
 	posts = Post.objects.all()
-
 	context = { 'posts': posts}
 	return render(request, 'social/feed.html', context)
 
-def register(request):
+def registroPaciente(request):
 	if request.method == 'POST':
 		form = UserRegisterForm(request.POST)
 		if form.is_valid():
 			form.save()
-			username = form.cleaned_data['username']
+			username = form.cleaned_data['correo']
 			messages.success(request, f'Usuario {username} creado')
-			return redirect('feed')
+			return redirect('login')
 	else:
 		form = UserRegisterForm()
 
 	context = { 'form' : form }
 	return render(request, 'social/register.html', context)
 
-@login_required
-def post(request):
-	current_user = get_object_or_404(User, pk=request.user.pk)
+def registroStaff(request):
 	if request.method == 'POST':
-		form = PostForm(request.POST)
+		form = StaffRegisterForm(request.POST)
 		if form.is_valid():
-			post = form.save(commit=False)
-			post.user = current_user
-			post.save()
-			messages.success(request, 'Post enviado')
-			return redirect('feed')
+			form.save()
+			username = form.cleaned_data['correo']
+			messages.success(request, f'Usuario {username} creado')
+			return redirect('menu3')
 	else:
-		form = PostForm()
-	return render(request, 'social/post.html', {'form' : form })
+		form = StaffRegisterForm()
 
+	context = { 'form' : form }
+	return render(request, 'social/register.html', context)
 
+def login_page(request):
+	form = LoginForm(request.POST or None)
+	if request.method == 'POST':
+		if form.is_valid():
+			username=form.cleaned_data.get('username')
+			password=form.cleaned_data.get('password')
+			user = authenticate(username=username, password=password)
+			if user is not None and user.is_especialista and user.is_active:
+				login(request, user)
+				return redirect('menu')
+			elif user is not None and user.is_paciente and user.is_active:
+				login(request, user)
+				return redirect('menu2')
+			elif user is not None and user.is_superuser and user.is_active:
+				login(request, user)
+				return redirect('menu3')
+			else:
+				messages.error(request, 'Correo o contraseña incorrectos')
+	return render(request, 'social/login.html', context={'form': form})
 
-def profile(request, username=None):
-	current_user = request.user
-	if username and username != current_user.username:
-		user = User.objects.get(username=username)
-		posts = user.posts.all()
+def gestionarpaciente(request,idPaciente):
+	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
+	form = PacienteForm(instance=paciente)
+	return render(request, "social/gestionarpaciente.html", {"form":form})
+
+def actualizarpaciente(request, idPaciente):
+	paciente = Paciente.objects.get(pk=idPaciente)
+	form = PacienteForm(request.POST, instance=paciente)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/feed.html", {"paciente":paciente})
+
+def gestionarstaff(request,idPaciente):
+	paciente = Paciente.objects.filter(idPaciente = idPaciente).first()
+	form = StaffForm(instance=paciente)
+	return render(request, "social/gestionarstaff.html", {"form":form})
+
+def actualizarstaff(request, idPaciente):
+	paciente = Paciente.objects.get(pk=idPaciente)
+	form = StaffForm(request.POST, instance=paciente)
+	if form.is_valid():
+		form.save()
+	return render(request, "social/feed.html", {"paciente":paciente})
+
+def eliminarcuenta(request):
+    user_pk = request.user.pk
+    User = get_user_model()
+    User.objects.filter(pk=user_pk).update(is_active=False)
+    messages.success(request, 'Perfil eliminado')
+    return redirect('login')
+
+def creacionconsulta(request):
+	if request.method == 'POST':
+		form = Consulta(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Consulta creada')
+			return redirect('creacionconsulta')
 	else:
-		posts = current_user.posts.all()
-		user = current_user
-	return render(request, 'social/profile.html', {'user':user, 'posts':posts})
+		form = Consulta()
 
+	context = { 'form' : form }
+	return render(request, "social/creacionconsulta.html", context)
 
-def follow(request, username):
-	current_user = request.user
-	to_user = User.objects.get(username=username)
-	to_user_id = to_user
-	rel = Relationship(from_user=current_user, to_user=to_user_id)
-	rel.save()
-	messages.success(request, f'sigues a {username}')
-	return redirect('feed')
+def catalogolaboratorios(request):
+	if request.method == 'POST':
+		form = Catalogo(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f"Laboratorio Creado")
+			return redirect('catalogolaboratorios')
+	else:
+		form = Catalogo()
 
-def unfollow(request, username):
-	current_user = request.user
-	to_user = User.objects.get(username=username)
-	to_user_id = to_user.id
-	rel = Relationship.objects.filter(from_user=current_user.id, to_user=to_user_id).get()
-	rel.delete()
-	messages.success(request, f'Ya no sigues a {username}')
-	return redirect('feed')
+	context = { 'form' : form }
+	return render(request, "social/catalogolaboratorios.html", context)
 
+def listadesplegable(request):
+	if request.method=='POST':
+		form = busquedalaboratorios(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('catalogolaboratorios2' , Estudios.objects.all().last())
+	else:
+		form = busquedalaboratorios()
 
+	context = {'form': form}
+	return render(request, "social/busquedalaboratorios.html", context)
 
+def busquedalaboratorio2(request, nombre):
+	estudio = Estudios.objects.filter(nombre=nombre).first()
+	form = Catalogo(instance=estudio)
+	return render(request, "social/busquedalaboratorios.html",  {"form":form})
 
+def mostrarlaboratorio(request, nombre):
+	estudio = Estudios.objects.get(nombre=nombre)
+	form = Catalogo(request.POST, instance=estudio)
+	return render(request, "social/menu.html", {"Estudio":estudio})
 
+def menu(request):
+	context = {}
+	return render(request, 'social/menu.html')
 
+def menu2(request):
+	context = {}
+	return render(request, 'social/menu2.html')
 
+def menu3(request):
+	context = {}
+	return render(request, 'social/menu3.html')
 
+def citas(request):
+	context = {}
+	return render(request, 'social/citas.html')
 
+	
+def creacionexpediente(request):
+	posts = Consultas.objects.all()
+	context = { 'Consulta': Consultas}
+	return render(request, 'social/creacionexpediente.html', context)
 
+def expediente(request):
+	if 'term' in request.GET:
+		qs = Consultas.objects.filter(nombre__contains=request.GET.get('term'))
+		nombres = list()
+		for consultas in qs:
+			nombres.append(consultas.nombre)
+			return JsonResponse(nombres, safe=False)
+	busqueda = request.GET['busqueda']
+	consultas = Consultas.objects.filter(nombre__contains=busqueda)
+	return render(request,'social/expediente.html', {'consultas':consultas})
 
+def busquedaexpediente(request):
+	context = {}
+	return render(request, 'social/busquedaexpediente.html')
+	
+def asignarlaboratorio(request):
+	if request.method == "POST":
+		form = Laboratorios(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Estudio asignado')
+			return redirect('menu')
+	else:
+		form = Laboratorios()
+
+	context = { 'form' : form }
+	return render(request, 'social/asignarlaboratorio.html', context)
+
+def visualizacionderesultados(request):
+	context = {}
+	return render(request, 'social/visualizacionderesultados.html')
+
+def staff(request):
+	return render(request,'social/menu.html')
+
+def paciente(request):
+	return render(request,'social/menu2.html')
+
+def horariosEspecialistas(request):
+	if request.method == "POST":
+		form = Horarios(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Horario guardado')
+			return redirect('establecerhorarios')
+	else:
+		form = Horarios()
+
+	context = { 'form' : form }
+	return render(request, 'social/establecerhorarios.html', context)
+
+def registrarEspecialidades(request):
+	if request.method == "POST":
+		form = EspecialidadesForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Especialidad Registrada')
+			return redirect('registroEspecialidades')
+	else:
+		form = EspecialidadesForm()
+
+	context = { 'form' : form }
+	return render(request, 'social/registroEspecialidades.html', context)
+
+def agendarCitas(request):
+	if request.method == "POST":
+		form = EspecialidadesForm(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Especialidad Registrada')
+			return redirect('registroEspecialidades')
+	else:
+		form = EspecialidadesForm()
+
+	context = { 'form' : form }
+	return render(request, 'social/registroEspecialidades.html', context)
