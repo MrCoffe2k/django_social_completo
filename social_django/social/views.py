@@ -142,7 +142,7 @@ def listadesplegable(request):
 
 def busquedalaboratorio2(request, nombre):
 	estudio = Estudios.objects.filter(nombre=nombre).first()
-	form = Catalogo(instance=estudio)
+	form = Catalogo2(instance=estudio)
 	return render(request, "social/busquedalaboratorios.html",  {"form":form})
 
 def mostrarlaboratorio(request, nombre):
