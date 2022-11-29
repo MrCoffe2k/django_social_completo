@@ -16,8 +16,9 @@
     <h2 class="t2">Paciente: {{request.GET.busqueda}}</h2>
     <br>
     {% csrf_token %}
-    {{ form.as_p }}
-    {{consultas}}
+    {% for consultas in consultas %}
+    {{consultas|linebreaks}}
+    {% endfor %}
 </body>
 </html>
 {% endblock %}
