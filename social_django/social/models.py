@@ -237,3 +237,11 @@ class login(models.Model):
 	
 	class Meta:
 		verbose_name_plural = 'Login'
+
+class Hacercitas(models.Model):
+	dia=models.DateField(null=True)
+	hora=models.TimeField(null=True)
+	especialista=models.CharField(max_length=100)
+
+	def __str__(self):
+		return f'{self.dia,self.hora,self.especialista}'

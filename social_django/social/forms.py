@@ -153,8 +153,7 @@ class Laboratorios(forms.ModelForm):
 		model= Laboratorio
 		fields=['Estudio','Paciente','Muestra']
 
-class Horarios(forms.ModelForm):
-	DIAS = (
+DIAS = (
         (1,'Lunes'),
         (2,'Martes'),
         (3,'Miercoles'),
@@ -163,6 +162,8 @@ class Horarios(forms.ModelForm):
         (6,'Sabado'),
         (7,'Domingo'),
     )
+class Horarios(forms.ModelForm):
+	
 	dia =  forms.ChoiceField(choices=DIAS)
 	horaInicio = forms.TimeField(widget=TimePickerInput)
 	horaFinal = forms.TimeField(widget=TimePickerInput)
@@ -171,4 +172,26 @@ class Horarios(forms.ModelForm):
 	class Meta:
 		model= Horarios
 		fields=['especialista','dia','horaInicio','horaFinal']
+
+class Citas(forms.ModelForm):
+	especialista = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
+	class Meta:
+		model= Hacercitas
+		fields=['especialista']
+
+
+class Citas2(forms.ModelForm):
+	dia= forms.ChoiceField(choices=DIAS)
+	class Meta:
+		model= Hacercitas
+		fields=['dia']
+
+class Citas3(forms.ModelForm):
+	hora=forms.TimeField(widget=TimePickerInput)
+	class Meta:
+		model= Hacercitas
+		fields=['hora']
+
+
 
