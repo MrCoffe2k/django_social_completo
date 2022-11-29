@@ -20,16 +20,19 @@ urlpatterns = [
     path('menu2/', views.menu2, name='menu2'),
     path('menu3/', views.menu3, name='menu3'),
     path('citas/', views.citas, name='citas'),
-    path('establecerhorarios/', views.establecerhorarios, name='establecerhorarios'),
+    path('establecerhorarios/', views.horariosEspecialistas, name='establecerhorarios'),
 	path('creacionconsulta/', views.creacionconsulta, name='creacionconsulta'),
 	path('catalogolaboratorios/', views.catalogolaboratorios, name='catalogolaboratorios'),
-	path('busquedalaboratorios/', views.busquedalaboratorios, name='busquedalaboratorios'),
+	path('listadesplegable/', views.listadesplegable, name='busquedalaboratorios'),
+	path('busquedalaboratorios/<str:nombre>/', views.busquedalaboratorio2, name='catalogolaboratorios2'),
+	path('mostrarlaboratorio/', views.mostrarlaboratorio, name='mostrarlaboratorio'),
 	path('creacionexpediente/', views.creacionexpediente, name='creacionexpediente'),
 	path('edicionexpediente/', views.creacionexpediente, name='edicionexpediente'),
 	path('asignarlaboratorio/', views.asignarlaboratorio, name='asignarlaboratorio'),
 	path('visualizacionderesultados/', views.visualizacionderesultados, name='visualizacionderesultados'),
 	path('busquedaexpediente/', views.busquedaexpediente, name='busquedaexpediente'),
+	path('registroEspecialidades/', views.registrarEspecialidades, name='registroEspecialidades'),
+	path('citas/', views.agendarCitas, name='citas'),
 	path('expediente/', views.expediente, name='expediente'),
 	
-    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

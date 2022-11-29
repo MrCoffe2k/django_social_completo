@@ -1,12 +1,23 @@
+{% extends 'social/layout.html' %}
+{% include 'social/registroEspecialidades.html' %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Especialidades</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Registrar Especialidades</title>
 </head>
 <body>
-    <h1>Aquí se registran las especialidades</h1>
+    <form action="{% url 'registroEspecialidades' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Registrar</button>
+	</form>
 </body>
 </html>
+{% endblock %}

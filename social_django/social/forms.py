@@ -81,10 +81,10 @@ class StaffForm(forms.ModelForm):
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Observaciones'}), required=True)
 	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
-	nombre = forms.CharField(label="Nombre del paciente", max_length=100)
-	peso = forms.FloatField(label="Peso")
-	altura = forms.FloatField(label="Altura")
-	edad = forms.IntegerField(label = "Edad")
+	nombre = forms.CharField(label="Nombre del paciente", max_length=100,widget=forms.Textarea(attrs={'rows':1, 'placeholder': 'Nombre del paciente'}))
+	peso = forms.FloatField(label="Peso",widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Peso (Kg)'}))
+	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Altura(cm)'}))
+	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Edad'}))
 	doctor = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 
@@ -105,12 +105,12 @@ class Catalogo(forms.ModelForm):
 
 
 class busquedalaboratorios(forms.ModelForm):
-	opciones = forms.ModelChoiceField(queryset=Estudios.objects.all(), empty_label=None)
+	nombre = forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ), empty_label=None)
 
 	class Meta:
 		model= Estudios
-		fields = '__all__'
-class Especialidades:
+		fields = ['nombre']
+class EspecialidadesForm(forms.ModelForm):
 	nombre = forms.CharField(label='Nombre')
 
 	class Meta:
@@ -124,3 +124,40 @@ class LoginForm(forms.ModelForm):
 	class Meta:
 		model = Paciente
 		fields = ['username', 'password']
+
+class LoginForm2(forms.ModelForm):
+	username = forms.CharField(label="Usuario")
+	password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")		
+
+	class Meta:
+		model = Especialistas
+		fields = ['username', 'password']
+
+class Laboratorios(forms.ModelForm):
+	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select)
+	Paciente = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select(attrs={'class': 'choice'}))
+	Muestra = forms.FloatField(label="Numero de muestra")
+	class Meta:
+		model= Laboratorio
+		fields=['Estudio','Paciente','Muestra']
+
+class Horarios(forms.ModelForm):
+	DIAS = (
+        (1,'Lunes'),
+        (2,'Martes'),
+        (3,'Miercoles'),
+        (4,'Jueves'),
+        (5,'Viernes'),
+        (6,'Sabado'),
+        (7,'Domingo'),
+    )
+	dia =  forms.ChoiceField(choices=DIAS)
+	horaInicio = forms.TimeField(widget=TimePickerInput)
+	horaFinal = forms.TimeField(widget=TimePickerInput)
+	especialista = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
+	class Meta:
+		model= Horarios
+		fields=['especialista','dia','horaInicio','horaFinal']
+

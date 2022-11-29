@@ -18,7 +18,7 @@
     
             <div class="btn-group">
                 
-                <button><a href="{% url 'citas' %}">Asignar estudio</a></button>
+                <button><a href="{% url 'citas' %}">Citas</a></button>
                 <button><a href="{% url 'gestionarstaff' user.idPaciente %}">Gestionar usuario</a></button> 
                 <button><a href="{% url 'creacionconsulta' %}">Creación de consulta</a></button> 
                 <button><a href="{% url 'creacionexpediente' %}">Creación y edición de expediente</a></button>
@@ -28,6 +28,7 @@
                 <button><a href="{% url 'visualizacionderesultados' %}">Visualizar resultados de estudios</a></button>
                 <button><a href="{% url 'busquedaexpediente' %}">Buscar expediente</a></button>
                 <button><a href="{% url 'establecerhorarios' %}">Establecer horarios</a></button>
+                <button><a href="{% url 'registroEspecialidades' %}">Registrar Especialidades</a></button>
                 
             </div>
             <script src="{% static 'functions.js' %}"></script>
