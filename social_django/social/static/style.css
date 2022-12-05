@@ -153,6 +153,11 @@ a {
   color: white;
 }
 
+.a-black {
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: black;
+}
 
 .main {
   background: #099E81;

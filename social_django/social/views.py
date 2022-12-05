@@ -115,6 +115,19 @@ def creacionconsulta(request):
 	context = { 'form' : form }
 	return render(request, "social/creacionconsulta.html", context)
 
+def edicionconsulta(request, idConsultas):
+	consultas = Consultas.objects.filter(idConsultas = idConsultas).first()
+	form = Consulta(instance=consultas)
+	return render(request, "social/edicionconsulta.html", {"form":form})
+
+def actualizarconsulta(request, idConsultas):
+	consultas = Consultas.objects.get(pk=idConsultas)
+	form = Consulta(request.POST, instance=consultas)
+	if form.is_valid():
+		form.save()
+		messages.success(request, f'Consulta modificada')
+	return render(request, "social/feed.html", {"consultas":consultas})
+
 def catalogolaboratorios(request):
 	if request.method == 'POST':
 		form = Catalogo(request.POST)

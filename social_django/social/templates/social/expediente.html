@@ -26,6 +26,7 @@
                 <th>Peso</th>
                 <th>Altura</th>
                 <th>Doctor</th>
+                <th></th>
             </tr>
             {% for consultas in consultas %}
             <tr>
@@ -35,6 +36,9 @@
                 <td>{{ consultas.peso }}</td>
                 <td>{{ consultas.altura }}</td>
                 <td>{{ consultas.doctor }}</td>
+                <td>
+                    <a class="a-black" href="{% url 'edicionconsulta' consultas.idConsultas %}">Editar</a>
+                </td>
             </tr>
             {% endfor %}
         </table>    
