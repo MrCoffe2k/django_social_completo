@@ -1,18 +1,19 @@
-body{
+body {
   background-image: url("consultorio.png");
-	font-size: 62.5%;
-	font-family: 'Varela Round', Helvetica, Arial, serif;
+  font-size: 62.5%;
+  font-family: 'Varela Round', Helvetica, Arial, serif;
 }
+
 /* Global Styles*/
-h1{
+h1 {
+
+}
+
+h2 {
   
 }
 
-h2{
-
-}
-
-.t1{
+.t1 {
   color: white;
   text-align: center;
   padding: 20px;
@@ -20,10 +21,10 @@ h2{
   margin: auto;
   /*Lo siguiente es para crear un borde a los textos*/
   text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000,
-             1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
+    1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;
 }
 
-.t2{
+.t2 {
   color: white;
   text-align: center;
   padding-top: 50px;
@@ -31,7 +32,7 @@ h2{
   margin: auto;
 }
 
-.t3{
+.t3 {
   color: white;
   text-align: center;
   padding-top: 50px;
@@ -39,17 +40,17 @@ h2{
   margin: auto;
 }
 
-h5{
-	font-size: 1rem;
-	margin-bottom: 0;
+h5 {
+  font-size: 1rem;
+  margin-bottom: 0;
 
 }
 
-p{
-	font-size: 1rem;
+p {
+  font-size: 1rem;
 }
 
-.choice{
+.choice {
   width: 100%;
   border: 0;
   border-bottom: 2px solid #D3D8DC;
@@ -60,24 +61,24 @@ p{
   color: #000;
 }
 
-button{
-	font-size: 1rem;
-	color: white;
-	padding: 0.4rem 1.4rem;
-	border: none;
-	background: #7A9D96;
-	border-radius: 4px;
-	cursor: pointer;
+button {
+  font-size: 1rem;
+  color: white;
+  padding: 0.4rem 1.4rem;
+  border: none;
+  background: #7A9D96;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.btn{
+.btn {
   font-size: 1rem;
-	color: white;
-	padding: 5%;
-	border: 2px solid white;
+  color: white;
+  padding: 5%;
+  border: 2px solid white;
   border-radius: 100px;
-	background: #4eccb3;
-	cursor: pointer;
+  background: #4eccb3;
+  cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -86,12 +87,12 @@ button{
 
 .btn-group button {
   font-size: 1rem;
-	color: white;
-	padding: 2%;
-	border: 2px solid white;
+  color: white;
+  padding: 2%;
+  border: 2px solid white;
   border-radius: 100px;
-	background: #4eccb3;
-	cursor: pointer;
+  background: #4eccb3;
+  cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -99,11 +100,13 @@ button{
   width: 50%;
   position: relative;
   left: 23%;
-  display: block; /* Make the buttons appear below each other */
+  display: block;
+  /* Make the buttons appear below each other */
 }
 
 .btn-group button:not(:last-child) {
-  border-bottom: none; /* Prevent double borders */
+  border-bottom: none;
+  /* Prevent double borders */
 }
 
 /* Add a background color on hover */
@@ -111,125 +114,129 @@ button{
   background-color: #6ca86e;
 }
 
-img{
-	object-fit: cover;
+img {
+  object-fit: cover;
 }
 
 /* Nav bar */
-.main-head{
-	background: #099E81;
-	color: #fff;
+.main-head {
+  background: #099E81;
+  color: #fff;
 }
 
-nav.main{
-	min-height: 7vh;
-	display: flex;
-	width: 65%;
-	margin: auto; 
-	align-items: center;
-	padding: 0.5rem;
+nav.main {
+  min-height: 7vh;
+  display: flex;
+  width: 65%;
+  margin: auto;
+  align-items: center;
+  padding: 0.5rem;
 }
 
-nav.main ul{
-	display: flex;
-	flex: 1 1 40rem;
-	justify-content: space-around;
-	align-items: center;
-	list-style: none;
+nav.main ul {
+  display: flex;
+  flex: 1 1 40rem;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
 }
 
-#logo{
-	flex: 2 1 40rem;
+#logo {
+  flex: 2 1 40rem;
 }
 
 /* -----*/
 
-a{
-	font-size: 1.25rem;
-	text-decoration: none;
-	color: white;
+a {
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: white;
 }
 
-
-.main{
-	background: #099E81;
-	width: 60%;
-	margin: 5% auto;
-	border-radius: 4px;
-	padding-bottom: 20px;
+.a-black {
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: black;
 }
 
-/*div{
-  background-color: #099E81;
-  border: 2px solid black;
+.main {
+  background: #099E81;
+  width: 60%;
+  margin: 5% auto;
+  border-radius: 4px;
+  padding-bottom: 20px;
+}
+
+.division{
+  position: relative;
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 30px;
-  text-align: center;
-  width: 45%;
+  width: 98%;
 	margin-top: 5%;
   margin-bottom:5%;
   margin-right: 30%;
-  margin-left: 30%;
-}*/
+  margin-left: 1%;
+}
 
 /* NAVIGATION BAR */
-.second-nav{
-  background-color:lightseagreen;
-	display: flex;
-	padding: 15px 30px;
+.second-nav {
+  background-color: lightseagreen;
+  display: flex;
+  padding: 15px 30px;
 }
 
-.second-nav .feed{
-	flex: 1 1 30px;
+.second-nav .feed {
+  flex: 1 1 30px;
 }
 
-.second-nav .feed:hover{
-	flex: 1 1 30px;
-	color: grey;
+.second-nav .feed:hover {
+  flex: 1 1 30px;
+  color: grey;
 }
 
-.second-nav .profile{
-	flex: 1 1 30px;
+.second-nav .profile {
+  flex: 1 1 30px;
 }
 
-.second-nav .profile:hover{
-	flex: 1 1 30px;
-	color: grey;
+.second-nav .profile:hover {
+  flex: 1 1 30px;
+  color: grey;
 }
 
-.second-nav .new{
-	flex: 6 1 5rem;
-	text-align: right;
-	text-transform: uppercase;
-  	color: #7A9D96;
+.second-nav .new {
+  flex: 6 1 5rem;
+  text-align: right;
+  text-transform: uppercase;
+  color: #7A9D96;
 }
 
-.second-nav .new:hover{
-	color: grey;
+.second-nav .new:hover {
+  color: grey;
 }
 
 /* Article */
 
-article{
-	width: 93%;
-	margin: auto;
-	padding: 40px 0;
-	border-bottom: 2px solid #ECEEEF;
+article {
+  width: 93%;
+  margin: auto;
+  padding: 40px 0;
+  border-bottom: 2px solid #ECEEEF;
 }
 
-.username{
-	margin-bottom: .2rem;
+.username {
+  margin-bottom: .2rem;
 }
 
-.username a{
-	font-size: 1.1rem;
+.username a {
+  font-size: 1.1rem;
 }
 
-.container-article{
+.container-article {
   display: flex;
 }
 
-.container-article img{
+.container-article img {
   height: 68px;
   width: 68px;
   margin-right: 10px;
@@ -245,48 +252,50 @@ time {
   opacity: .7;
 }
 
-.post{
-	font-size: .94rem;
+.post {
+  font-size: .94rem;
 }
 
 /* PROFILE */
-.profile{
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+.profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.profile img{
+.profile img {
   height: 100px;
   width: 100px;
   margin-right: 10px;
   border-radius: 50%;
   margin: 20px;
 }
-.profile h2{
-	margin-top: -10px;
-	font-size: 1.3rem;
+
+.profile h2 {
+  margin-top: -10px;
+  font-size: 1.3rem;
 }
 
 /* Followers / Following / Post */
-.follow{
-	display: flex;
-	width: 95%;
-	justify-content: space-around;
-	margin: 30px auto;
-	text-align: center;
-	border-bottom: 2px solid #ECEEEF;
-	padding-bottom: 20px;
+.follow {
+  display: flex;
+  width: 95%;
+  justify-content: space-around;
+  margin: 30px auto;
+  text-align: center;
+  border-bottom: 2px solid #ECEEEF;
+  padding-bottom: 20px;
 }
 
 
 /*Form Elements*/
 form {
-    margin: 0;
-    padding: 40px;
-    font-size: 1rem;
-    color: #fff;
+  margin: 0;
+  padding: 40px;
+  font-size: 1rem;
+  color: #fff;
 }
+
 input {
   width: 100%;
   border: 0;
@@ -296,12 +305,14 @@ input {
   padding: 20px 0 4px;
   margin: 0 0 20px;
   color: #777B7E;
-  background-color:paleturquoise
+  background-color: paleturquoise
 }
+
 input:focus {
   border-color: #7A9D96;
   color: #2C3238;
 }
+
 textarea {
   width: 100%;
   border: 0;
@@ -342,10 +353,12 @@ button#submit:hover {
   color: #000;
   font-size: 0.9rem;
 }
+
 .success {
   background: #43DC7E;
   color: white;
 }
+
 .error {
   background: #AB3444;
   color: white;
@@ -354,7 +367,7 @@ button#submit:hover {
 
 
 /*Footer*/
-footer{
+footer {
   color: white;
   text-align: center;
   font-size: .875em;
@@ -369,7 +382,7 @@ footer p a {
   color: white;
 }
 
-img.profile{
+img.profile {
   height: 80px;
   width: 80px;
   margin-right: 10px;
@@ -378,7 +391,7 @@ img.profile{
 }
 
 
-.follow-button{
+.follow-button {
   color: white;
 }
 
@@ -390,7 +403,7 @@ img.profile{
 
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -477,3 +490,50 @@ img.profile{
   color: #fff;
 }
 
+table{
+  font-size: 120%;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 2%);
+  border-collapse: collapse;
+  width: 500px;
+  height: 100px;
+  border: 1px solid #bdc3c7;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+}
+
+tr{
+  transition: all .2s ease-in;
+  cursor: pointer;
+}
+
+th{
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+td{
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  background-color: #ffffff;
+}
+
+#header{
+  background-color: #20b2aa;
+  color: #fff;
+}
+
+tr:hover{
+  background-color: #f5f5f5;
+  transform: scale(1.02);
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 768px){
+  table {
+    width: 90%;
+  }
+}

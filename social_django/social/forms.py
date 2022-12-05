@@ -79,12 +79,12 @@ class StaffForm(forms.ModelForm):
 		help_texts = {k:"" for k in fields}
 
 class Consulta(forms.ModelForm):
-	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Observaciones'}), required=True)
+	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder':'Observaciones'}), required=True)
 	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
-	nombre = forms.CharField(label="Nombre del paciente", max_length=100,widget=forms.Textarea(attrs={'rows':1, 'placeholder': 'Nombre del paciente'}))
-	peso = forms.FloatField(label="Peso",widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Peso (Kg)'}))
-	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Altura(cm)'}))
-	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder': 'Edad'}))
+	nombre = forms.CharField(label="Nombre del paciente", max_length=100,widget=forms.Textarea(attrs={'rows':1, 'placeholder':'Nombre del paciente'}))
+	peso = forms.FloatField(label="Peso",widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Peso (Kg)'}))
+	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Altura(cm)'}))
+	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Edad'}))
 	doctor = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 
@@ -98,14 +98,23 @@ class Catalogo(forms.ModelForm):
 	precio = forms.FloatField(label="Precio")
 	tiempoAplicacion = forms.CharField(label="Tiempo de Aplicacion")
 	analiza = forms.CharField(label="¿Que analiza?")
-	requisitos = forms.CharField(label="Requisitos", widget=forms.Textarea(attrs={'rows':10, 'placeholder': 'Requisitos'}), required=True)
+	requisitos = forms.CharField(label="Requisitos", widget=forms.Textarea(attrs={'rows':10, 'placeholder':'Requisitos'}), required=True)
 	class Meta:
 		model= Estudios
 		fields=['nombre','precio','tiempoAplicacion','analiza','requisitos']
 
+class Catalogo2(forms.ModelForm):
+	nombre= forms.CharField(label="Nombre del estudio", disabled=True)
+	precio = forms.FloatField(label="Precio", disabled=True)
+	tiempoAplicacion = forms.CharField(label="Tiempo de Aplicacion", disabled=True)
+	analiza = forms.CharField(label="¿Que analiza?", disabled=True)
+	requisitos = forms.CharField(label="Requisitos", widget=forms.Textarea(attrs={'rows':10, 'placeholder':'Requisitos'}), disabled=True)
+	class Meta:
+		model= Estudios
+		fields=['nombre','precio','tiempoAplicacion','analiza','requisitos']
 
 class busquedalaboratorios(forms.ModelForm):
-	nombre = forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ), empty_label=None)
+	nombre = forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ), empty_label=None, widget=forms.Select(attrs={'class':'choice'}))
 
 	class Meta:
 		model= Estudios
@@ -136,7 +145,7 @@ class LoginForm2(forms.ModelForm):
 class Laboratorios(forms.ModelForm):
 	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select)
 	Paciente = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select(attrs={'class': 'choice'}))
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
 	Muestra = forms.FloatField(label="Numero de muestra")
 	class Meta:
 		model= Laboratorio
@@ -151,13 +160,11 @@ DIAS = (
         (6,'Sabado'),
         (7,'Domingo'),
     )
-class Horarios(forms.ModelForm):
-	
-	dia =  forms.ChoiceField(choices=DIAS)
+	dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
 	horaInicio = forms.TimeField(widget=TimePickerInput)
 	horaFinal = forms.TimeField(widget=TimePickerInput)
 	especialista = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
+    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor', widget=forms.Select(attrs={'class':'choice'}))
 	class Meta:
 		model= Horarios
 		fields=['especialista','dia','horaInicio','horaFinal']
