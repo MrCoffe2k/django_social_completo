@@ -150,24 +150,25 @@ class Laboratorios(forms.ModelForm):
 	class Meta:
 		model= Laboratorio
 		fields=['Estudio','Paciente','Muestra']
-
-DIAS = (
-        (1,'Lunes'),
-        (2,'Martes'),
-        (3,'Miercoles'),
-        (4,'Jueves'),
-        (5,'Viernes'),
-        (6,'Sabado'),
-        (7,'Domingo'),
-    )
-dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
-horaInicio = forms.TimeField(widget=TimePickerInput)
-horaFinal = forms.TimeField(widget=TimePickerInput)
-especialista = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor', widget=forms.Select(attrs={'class':'choice'}))
-class Meta:
-		model= Horarios
-		fields=['especialista','dia','horaInicio','horaFinal']
+		
+class Horarios(forms.ModelForm):
+	DIAS = (
+			(1,'Lunes'),
+			(2,'Martes'),
+			(3,'Miercoles'),
+			(4,'Jueves'),
+			(5,'Viernes'),
+			(6,'Sabado'),
+			(7,'Domingo'),
+		)
+	dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
+	horaInicio = forms.TimeField(widget=TimePickerInput)
+	horaFinal = forms.TimeField(widget=TimePickerInput)
+	especialista = forms.ModelChoiceField(
+		queryset=Paciente.objects.filter(is_especialista=True),label='Doctor', widget=forms.Select(attrs={'class':'choice'}))
+	class Meta:
+			model= Horarios
+			fields=['especialista','dia','horaInicio','horaFinal']
 
 class Citas(forms.ModelForm):
 	especialista = forms.ModelChoiceField(
