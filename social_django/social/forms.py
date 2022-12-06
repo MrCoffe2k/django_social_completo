@@ -143,7 +143,7 @@ class LoginForm2(forms.ModelForm):
 		fields = ['username', 'password']
 
 class Laboratorios(forms.ModelForm):
-	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select)
+	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select(attrs={'class':'choice'}))
 	Paciente = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
 	Muestra = forms.FloatField(label="Numero de muestra")
@@ -160,12 +160,12 @@ DIAS = (
         (6,'Sabado'),
         (7,'Domingo'),
     )
-	dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
-	horaInicio = forms.TimeField(widget=TimePickerInput)
-	horaFinal = forms.TimeField(widget=TimePickerInput)
-	especialista = forms.ModelChoiceField(
+dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
+horaInicio = forms.TimeField(widget=TimePickerInput)
+horaFinal = forms.TimeField(widget=TimePickerInput)
+especialista = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_especialista=True),label='Doctor', widget=forms.Select(attrs={'class':'choice'}))
-	class Meta:
+class Meta:
 		model= Horarios
 		fields=['especialista','dia','horaInicio','horaFinal']
 
