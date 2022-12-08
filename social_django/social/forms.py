@@ -150,6 +150,15 @@ class Laboratorios(forms.ModelForm):
 	class Meta:
 		model= Laboratorio
 		fields=['Estudio','Paciente','Muestra']
+
+class ResultadosLaboratorios(forms.ModelForm):
+	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select(attrs={'class':'choice'}))
+	Paciente = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
+	Muestra = forms.FloatField(label="Numero de muestra")
+	class Meta:
+		model= Laboratorio
+		fields=['Estudio','Paciente','Muestra']
 		
 class Horarios(forms.ModelForm):
 	DIAS = (
