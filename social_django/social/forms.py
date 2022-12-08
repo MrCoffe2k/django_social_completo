@@ -179,6 +179,15 @@ class Citas(forms.ModelForm):
 
 
 class Citas2(forms.ModelForm):
+	DIAS = (
+			(1,'Lunes'),
+			(2,'Martes'),
+			(3,'Miercoles'),
+			(4,'Jueves'),
+			(5,'Viernes'),
+			(6,'Sabado'),
+			(7,'Domingo'),
+		)
 	dia= forms.ChoiceField(choices=DIAS)
 	class Meta:
 		model= Hacercitas
