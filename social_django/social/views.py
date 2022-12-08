@@ -115,6 +115,19 @@ def creacionconsulta(request):
 	context = { 'form' : form }
 	return render(request, "social/creacionconsulta.html", context)
 
+def edicionconsulta(request, idConsultas):
+	consultas = Consultas.objects.filter(idConsultas = idConsultas).first()
+	form = Consulta(instance=consultas)
+	return render(request, "social/edicionconsulta.html", {"form":form})
+
+def actualizarconsulta(request, idConsultas):
+	consultas = Consultas.objects.get(pk=idConsultas)
+	form = Consulta(request.POST, instance=consultas)
+	if form.is_valid():
+		form.save()
+		messages.success(request, f'Consulta modificada')
+	return render(request, "social/feed.html", {"consultas":consultas})
+
 def catalogolaboratorios(request):
 	if request.method == 'POST':
 		form = Catalogo(request.POST)
@@ -142,7 +155,7 @@ def listadesplegable(request):
 
 def busquedalaboratorio2(request, nombre):
 	estudio = Estudios.objects.filter(nombre=nombre).first()
-	form = Catalogo(instance=estudio)
+	form = Catalogo2(instance=estudio)
 	return render(request, "social/busquedalaboratorios.html",  {"form":form})
 
 def mostrarlaboratorio(request, nombre):
@@ -161,10 +174,6 @@ def menu2(request):
 def menu3(request):
 	context = {}
 	return render(request, 'social/menu3.html')
-
-def citas(request):
-	context = {}
-	return render(request, 'social/citas.html')
 
 	
 def creacionexpediente(request):
@@ -236,15 +245,38 @@ def registrarEspecialidades(request):
 	context = { 'form' : form }
 	return render(request, 'social/registroEspecialidades.html', context)
 
-def agendarCitas(request):
+def agendarCitas1(request):
 	if request.method == "POST":
-		form = EspecialidadesForm(request.POST)
+		form = Citas(request.POST)
 		if form.is_valid():
 			form.save()
-			messages.success(request, f'Especialidad Registrada')
-			return redirect('registroEspecialidades')
+			return redirect('citas2')
 	else:
-		form = EspecialidadesForm()
+		form = Citas()
 
 	context = { 'form' : form }
-	return render(request, 'social/registroEspecialidades.html', context)
+	return render(request, 'social/citas.html', context)
+
+def agendarCitas2(request):
+	if request.method == "POST":
+		form = Citas2(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('citas3')
+	else:
+		form = Citas2()
+
+	context = { 'form' : form }
+	return render(request, 'social/citas3.html', context)
+
+def agendarCitas3(request):
+	if request.method == "POST":
+		form = Citas3(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('citas')
+	else:
+		form = Citas3()
+
+	context = { 'form' : form }
+	return render(request, 'social/citas.html', context)

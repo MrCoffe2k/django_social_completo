@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,13 +12,39 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <title>Expediente</title>
 </head>
+
 <body>
     <h1 class="t1">Expediente</h1>
     <h2 class="t2">Paciente: {{request.GET.busqueda}}</h2>
     <br>
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{consultas}}
+    <div>
+        <table>
+            <tr id="header">
+                <th>Fecha</th>
+                <th>Motivo</th>
+                <th>Edad</th>
+                <th>Peso</th>
+                <th>Altura</th>
+                <th>Doctor</th>
+                <th></th>
+            </tr>
+            {% for consultas in consultas %}
+            <tr>
+                <td>{{ consultas.fecha }}</td>
+                <td>{{ consultas.motivo }}</td>
+                <td>{{ consultas.edad }}</td>
+                <td>{{ consultas.peso }}</td>
+                <td>{{ consultas.altura }}</td>
+                <td>{{ consultas.doctor }}</td>
+                <td>
+                    <a class="a-black" href="{% url 'edicionconsulta' consultas.idConsultas %}">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>    
+    </div>
+    
 </body>
+
 </html>
 {% endblock %}

@@ -1,5 +1,4 @@
 {% extends 'social/layout.html' %}
-{% include 'social/citas.html' %}
 {% block content %}
 <!DOCTYPE html>
 {% load static %}
@@ -9,17 +8,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <title>Expediente</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <title>Edicion de consulta</title>
 </head>
 <body>
-    <form action="{% url 'citas' %}"class="form" method="post">
+    <h1 class="t1">Edicion de consulta</h1>
+    <form action="{% url 'actualizarconsulta' consultas.idConsultas %}"class="form" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
-	
 		<button type="submit" id="submit">Guardar</button>
-
-    
 	</form>
-</body>
 </html>
 {% endblock %}
