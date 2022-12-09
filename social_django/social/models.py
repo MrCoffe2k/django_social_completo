@@ -122,7 +122,7 @@ class Especialistas(AbstractBaseUser):
 class Horarios (models.Model):
 	id = models.AutoField(primary_key=True)
 	dia = models.CharField(max_length=15)
-	horas = models.CharField(max_length=150)
+	horas = models.CharField(max_length=150, default='+')
 	especialista = models.CharField(max_length=30,null=False, default="Especialista")
 
 	def __str__(self):
