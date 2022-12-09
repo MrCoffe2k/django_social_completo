@@ -221,13 +221,13 @@ def paciente(request):
 
 def horariosEspecialistas(request):
 	if request.method == "POST":
-		form = Horarios(request.POST)
+		form = HorariosForm(request.POST)
 		if form.is_valid():
 			form.save()
 			messages.success(request, f'Horario guardado')
 			return redirect('establecerhorarios')
 	else:
-		form = Horarios()
+		form = HorariosForm()
 
 	context = { 'form' : form }
 	return render(request, 'social/establecerhorarios.html', context)
@@ -245,38 +245,18 @@ def registrarEspecialidades(request):
 	context = { 'form' : form }
 	return render(request, 'social/registroEspecialidades.html', context)
 
-def agendarCitas1(request):
+
+
+def agendarCita(request):
 	if request.method == "POST":
-		form = Citas(request.POST)
+		form = CitasForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return redirect('citas2')
-	else:
-		form = Citas()
-
-	context = { 'form' : form }
-	return render(request, 'social/citas.html', context)
-
-def agendarCitas2(request):
-	if request.method == "POST":
-		form = Citas2(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect('citas3')
-	else:
-		form = Citas2()
-
-	context = { 'form' : form }
-	return render(request, 'social/citas3.html', context)
-
-def agendarCitas3(request):
-	if request.method == "POST":
-		form = Citas3(request.POST)
-		if form.is_valid():
-			form.save()
+			messages.success(request, f'Cita Agendada')
 			return redirect('citas')
 	else:
-		form = Citas3()
+		form = CitasForm()
 
 	context = { 'form' : form }
 	return render(request, 'social/citas.html', context)
+

@@ -33,9 +33,7 @@ urlpatterns = [
 	path('visualizacionderesultados/', views.visualizacionderesultados, name='visualizacionderesultados'),
 	path('busquedaexpediente/', views.busquedaexpediente, name='busquedaexpediente'),
 	path('registroEspecialidades/', views.registrarEspecialidades, name='registroEspecialidades'),
-	path('citas/', views.agendarCitas1, name='citas'),
-	path('citas2/', views.agendarCitas2, name='citas2'),
-	path('citas3/', views.agendarCitas3, name='citas3'),
+	path('citas/', views.agendarCita, name='citas'),
 	path('expediente/', views.expediente, name='expediente'),
 	
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

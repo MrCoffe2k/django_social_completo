@@ -122,12 +122,11 @@ class Especialistas(AbstractBaseUser):
 class Horarios (models.Model):
 	id = models.AutoField(primary_key=True)
 	dia = models.CharField(max_length=15)
-	horaInicio = models.TimeField(blank=True,null=True)
-	horaFinal = models.TimeField(blank=True,null=True)
+	horas = models.CharField(max_length=150)
 	especialista = models.CharField(max_length=30,null=False, default="Especialista")
 
 	def __str__(self):
-		return f'{self.dia, self.horaInicio,self.horaFinal}'
+		return f'{self.horas}'
 
 	class Meta:
 		verbose_name_plural = "Horarios"
@@ -166,7 +165,7 @@ class Consultas(models.Model):
 	doctor = models.TextField(max_length=100, default='Doctor')
 
 	def __str__(self):
-		return f'{self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura, self.doctor}'
+		return f'{self.idConsultas,self.motivo,self.fecha, self.nombre, self.edad, self.peso,self.altura, self.doctor}'
 	class Meta:
 		verbose_name = 'consultas'
 		verbose_name_plural = 'consultas'
@@ -241,8 +240,9 @@ class login(models.Model):
 		verbose_name_plural = 'Login'
 
 class Hacercitas(models.Model):
-	dia=models.DateField(null=True)
-	hora=models.TimeField(null=True)
+	especialidad = models.CharField(max_length=100, null=True)
+	dia=models.CharField(null=True, max_length=100)
+	hora=models.TextField(max_length=100, default='Hora',null=True,unique=True)
 	especialista=models.CharField(max_length=100)
 
 	def __str__(self):

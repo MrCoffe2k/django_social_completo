@@ -81,7 +81,8 @@ class StaffForm(forms.ModelForm):
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder':'Observaciones'}), required=True)
 	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
-	nombre = forms.CharField(label="Nombre del paciente", max_length=100,widget=forms.Textarea(attrs={'rows':1, 'placeholder':'Nombre del paciente'}))
+	nombre = forms.ModelChoiceField(
+    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente',widget=forms.Select(attrs={'class': 'choice'}))
 	peso = forms.FloatField(label="Peso",widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Peso (Kg)'}))
 	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Altura(cm)'}))
 	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Edad'}))
@@ -160,34 +161,39 @@ DIAS = (
         (6,'Sabado'),
         (7,'Domingo'),
     )
-	dia =  forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
-	horaInicio = forms.TimeField(widget=TimePickerInput)
-	horaFinal = forms.TimeField(widget=TimePickerInput)
+
+HORAS = (
+        (1,'1:00'),
+        (2,'2:00'),
+        (3,'3:00'),
+        (4,'4:00'),
+        (5,'5:00'),
+        (6,'6:00'),
+        (7,'7:00'),
+    )
+
+
+class HorariosForm(forms.ModelForm):
+	dia = forms.ChoiceField(choices=DIAS, widget=forms.Select(attrs={'class':'choice'}))
+	horas = forms.MultipleChoiceField(widget=forms.SelectMultiple,
+                                          choices=HORAS)
 	especialista = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_especialista=True),label='Doctor', widget=forms.Select(attrs={'class':'choice'}))
 	class Meta:
 		model= Horarios
-		fields=['especialista','dia','horaInicio','horaFinal']
+		fields=['especialista','dia','horas']
 
-class Citas(forms.ModelForm):
+class CitasForm(forms.ModelForm):
+	especialidad = forms.ModelChoiceField(
+    queryset=Especialidades.objects.all(),widget=forms.Select)
 	especialista = forms.ModelChoiceField(
     queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
-	class Meta:
-		model= Hacercitas
-		fields=['especialista']
-
-
-class Citas2(forms.ModelForm):
 	dia= forms.ChoiceField(choices=DIAS)
+	hora=forms.ChoiceField(choices=HORAS)
 	class Meta:
 		model= Hacercitas
-		fields=['dia']
+		fields=['especialidad','especialista','dia','hora']
 
-class Citas3(forms.ModelForm):
-	hora=forms.TimeField(widget=TimePickerInput)
-	class Meta:
-		model= Hacercitas
-		fields=['hora']
 
 
 
