@@ -184,7 +184,7 @@ class Altura(models.Model):
 	  
 class Laboratorio(models.Model):
 	idLaboratorio = models.AutoField(primary_key=True)
-	Muestra = models.IntegerField()
+	Muestra = models.CharField(max_length=5)
 	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
 	Estudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='+')
 
@@ -197,7 +197,7 @@ class Laboratorio(models.Model):
 class ResultadosLab(models.Model):
 	idResultados = models.AutoField(primary_key=True)
 	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
-	Muestra = models.ForeignKey(Laboratorio, on_delete=models.CASCADE,related_name='+', default="2")
+	Muestra = models.CharField(max_length=5)
 	GlobulosRojos = models.IntegerField(null=True)
 	GlobulosBlancos = models.IntegerField(null=True)
 	Colesterol = models.IntegerField(null=True)

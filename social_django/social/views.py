@@ -212,10 +212,10 @@ def busquedaexpediente(request):
 def resultados(request):
 	if 'term' in request.GET:
 		qs = ResultadosLab.objects.filter(Muestra__contains=request.GET.get('term'))
-		muestra = list()
+		muestras = list()
 		for resultadoslab in qs:
-			muestra.append(resultadoslab.muestra)
-			return JsonResponse(muestra, safe=False)
+			muestras.append(resultadoslab.Muestra)
+			return JsonResponse(muestras, safe=False)
 	busqueda = request.GET['busqueda']
 	resultadoslab = ResultadosLab.objects.filter(Muestra__contains=busqueda)
 	return render(request,'social/resultados.html', {'resultadoslab':resultadoslab})
