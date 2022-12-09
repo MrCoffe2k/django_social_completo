@@ -215,12 +215,10 @@ class CitasForm(forms.ModelForm):
 			(7,'7:00'),
 		)
 
-		especialidad = forms.ModelChoiceField(
-		queryset=Especialidades.objects.all(),widget=forms.Select)
-		especialista = forms.ModelChoiceField(
-		queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select)
-		dia= forms.ChoiceField(choices=DIAS)
-		hora=forms.ChoiceField(choices=HORAS)
+		especialidad = forms.ModelChoiceField(queryset=Especialidades.objects.all(),widget=forms.Select(attrs={'class': 'choice'}))
+		especialista = forms.ModelChoiceField(queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
+		dia= forms.ChoiceField(choices=DIAS,widget=forms.Select(attrs={'class': 'choice'}))
+		hora=forms.ChoiceField(choices=HORAS,widget=forms.Select(attrs={'class': 'choice'}))
 		class Meta:
 			model= Hacercitas
 			fields=['especialidad','especialista','dia','hora']
