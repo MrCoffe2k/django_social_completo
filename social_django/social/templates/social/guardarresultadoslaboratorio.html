@@ -1,11 +1,22 @@
+{% extends 'social/layout.html' %}
+{% block content %}
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guardar resultados de laboratorio</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Guardar resultados</title>
 </head>
 <body>
-</body>
+    <h1 class="t1">Resultados de laboratorio</h1>
+    <form action="{% url 'guardarresultadoslaboratorio' %}"class="form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	
+		<button type="submit" id="submit">Guardar</button>
+	</form>
 </html>
+{% endblock %}

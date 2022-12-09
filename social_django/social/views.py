@@ -163,6 +163,19 @@ def mostrarlaboratorio(request, nombre):
 	form = Catalogo(request.POST, instance=estudio)
 	return render(request, "social/menu.html", {"Estudio":estudio})
 
+def guardarresultadoslaboratorio(request):
+	if request.method == 'POST':
+		form = Resultadoslab(request.POST)
+		if form.is_valid():
+			form.save()
+			messages.success(request, f'Resultados guardados')
+			return redirect('guardarresultadoslaboratorio')
+	else:
+		form = Resultadoslab()
+
+	context = { 'form' : form }
+	return render(request, "social/guardarresultadoslaboratorio.html", context)
+
 def menu(request):
 	context = {}
 	return render(request, 'social/menu.html')
@@ -195,6 +208,21 @@ def expediente(request):
 def busquedaexpediente(request):
 	context = {}
 	return render(request, 'social/busquedaexpediente.html')
+
+def resultados(request):
+	if 'term' in request.GET:
+		qs = ResultadosLab.objects.filter(Muestra__contains=request.GET.get('term'))
+		muestras = list()
+		for resultadoslab in qs:
+			muestras.append(resultadoslab.Muestra)
+			return JsonResponse(muestras, safe=False)
+	busqueda = request.GET['busqueda']
+	resultadoslab = ResultadosLab.objects.filter(Muestra__contains=busqueda)
+	return render(request,'social/resultados.html', {'resultadoslab':resultadoslab})
+
+def busquedaresultados(request):
+	context = {}
+	return render(request, 'social/busquedaresultados.html')
 	
 def asignarlaboratorio(request):
 	if request.method == "POST":

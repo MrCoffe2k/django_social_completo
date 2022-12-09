@@ -1,0 +1,46 @@
+{% extends 'social/layout.html' %}
+{% include 'social/busquedaexpediente.html' %}
+{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Resultados</title>
+</head>
+
+<body>
+    <h1 class="t1">Resultados</h1>
+    <h2 class="t2">Muestra: {{request.GET.busqueda}}</h2>
+    <br>
+    <div>
+        <table>
+            <tr id="header">
+                <th>Globulos rojos</th>
+                <th>Globulos blancos</th>
+                <th>Colesterol</th>
+                <th>Glucosa</th>
+                <th>TSH</th>
+                <th>Trigliceridos</th>
+            </tr>
+            {% for resultadoslab in resultadoslab %}
+            <tr>
+                <td>{{ resultadoslab.GlobulosRojos }}</td>
+                <td>{{ resultadoslab.GlobulosBlancos }}</td>
+                <td>{{ resultadoslab.Colesterol }}</td>
+                <td>{{ resultadoslab.Glucosa }}</td>
+                <td>{{ resultadoslab.TSH }}</td>
+                <td>{{ resultadoslab.Trigliceridos }}</td>
+            </tr>
+            {% endfor %}
+        </table>    
+    </div>
+    
+</body>
+
+</html>
+{% endblock %}
