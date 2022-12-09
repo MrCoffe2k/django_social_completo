@@ -144,21 +144,24 @@ class LoginForm2(forms.ModelForm):
 
 class Laboratorios(forms.ModelForm):
 	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select(attrs={'class':'choice'}))
-	Paciente = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
-	Muestra = forms.FloatField(label="Numero de muestra")
+	Paciente = forms.ModelChoiceField(queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
+	Muestra = forms.CharField(label="Numero de muestra",max_length=10,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
 	class Meta:
 		model= Laboratorio
 		fields=['Estudio','Paciente','Muestra']
 
-class ResultadosLaboratorios(forms.ModelForm):
-	Estudio= forms.ModelChoiceField(queryset=Estudios.objects.filter(precio__gt = 1 ),label='Estudios',widget=forms.Select(attrs={'class':'choice'}))
-	Paciente = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
-	Muestra = forms.FloatField(label="Numero de muestra")
+class Resultadoslab(forms.ModelForm):
+	Paciente = forms.ModelChoiceField(queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
+	Muestra = forms.ModelChoiceField(queryset=Laboratorio.objects.all(),label='Número de muestra', widget=forms.Select(attrs={'class':'choice'}))
+	GlobulosRojos = forms.CharField(label="Niveles de globulos rojos",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	GlobulosBlancos = forms.CharField(label="Niveles de globulos blancos",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	Colesterol = forms.CharField(label="Niveles de colesterol total",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	Glucosa = forms.CharField(label="Niveles de glucosa",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	TSH = forms.CharField(label="Niveles de TSH (hormona estimulante de la tiroides)",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
+	Trigliceridos = forms.CharField(label="Niveles de trigliceridos",max_length=3,validators=[RegexValidator(r'^\d{1,10}$')],required=True)
 	class Meta:
-		model= Laboratorio
-		fields=['Estudio','Paciente','Muestra']
+		model= ResultadosLab
+		fields=['Paciente','Muestra','GlobulosRojos','GlobulosBlancos','Colesterol','Glucosa','TSH','Trigliceridos']
 		
 class Horarios(forms.ModelForm):
 	DIAS = (

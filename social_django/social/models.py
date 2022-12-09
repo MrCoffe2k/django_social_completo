@@ -182,19 +182,35 @@ class Altura(models.Model):
 	class Meta:
 	  verbose_name_plural = "Altura"
 	  
-
 class Laboratorio(models.Model):
 	idLaboratorio = models.AutoField(primary_key=True)
 	Muestra = models.IntegerField()
-	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='hola5')
-	Estudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='hola6')
+	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	Estudio = models.ForeignKey(Estudios, on_delete=models.CASCADE,related_name='+')
 
 	def __str__(self):
-		return f'{self.idMuestra}'
-
+		return f'{self.Muestra}'
 
 	class Meta:
 		verbose_name_plural = "Laboratorio"
+
+class ResultadosLab(models.Model):
+	idResultados = models.AutoField(primary_key=True)
+	Paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE,related_name='+')
+	Muestra = models.ForeignKey(Laboratorio, on_delete=models.CASCADE,related_name='+', default="2")
+	GlobulosRojos = models.IntegerField(null=True)
+	GlobulosBlancos = models.IntegerField(null=True)
+	Colesterol = models.IntegerField(null=True)
+	Glucosa = models.IntegerField(null=True)
+	TSH = models.IntegerField(null=True)
+	Trigliceridos = models.IntegerField(null=True)
+
+	def __str__(self):
+		return f'{self.idResultados}'
+
+	class Meta:
+		verbose_name_plural = "Resultados"		
+
 class Citas(models.Model):
 	idCitas = models.AutoField(primary_key=True)
 	fecha = models.DateField()
