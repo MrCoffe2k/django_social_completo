@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser, UserManager
 from .widget import DatePickerInput
 from django.core.validators import RegexValidator
-import datetime
+from datetime import *
 
 
 
@@ -27,18 +27,6 @@ class Profile(models.Model):
 		user_ids = Relationship.objects.filter(to_user=self.user)\
 								.values_list('from_user_id', flat=True)
 		return settings.AUTH_USER_MODEL.objects.filter(id__in=user_ids)
-
-
-class Post(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts')
-	timestamp =  models.DateTimeField(default=timezone.now)
-	content = models.TextField()
-
-	class Meta:
-		ordering = ['-timestamp']
-
-	def __str__(self):
-		return f'{self.user.username}: {self.content}'
 
 
 class Relationship(models.Model):
@@ -102,6 +90,12 @@ class Paciente(AbstractUser):
 		user.admin = True
 		user.save(using=self._db)
 		return user
+	
+	@property
+	def edad(self):
+		if(self.FechaNacimiento != None):
+			edad = date.today().year - self.FechaNacimiento.year
+			return edad
 
 class Especialistas(AbstractBaseUser):
 	idEspecialista = models.AutoField(primary_key=True)
