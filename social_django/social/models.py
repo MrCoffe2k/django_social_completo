@@ -80,6 +80,7 @@ class Paciente(AbstractUser):
 	is_superuser = models.BooleanField(default=False)
 	is_especialista = models.BooleanField(default=False)
 	is_paciente = models.BooleanField(default=False)
+	especialidad = models.CharField(max_length=100,null=True)
 
 	USERNAME_FIELD = 'correo'
 	REQUIRED_FIELDS = ['username']
@@ -123,7 +124,7 @@ class Horarios (models.Model):
 	id = models.AutoField(primary_key=True)
 	dia = models.CharField(max_length=15)
 	horas = models.CharField(max_length=150, default='+')
-	especialista = models.CharField(max_length=30,null=False, default="Especialista")
+	especialista = models.CharField(max_length=60,null=False, default="Especialista")
 
 	def __str__(self):
 		return f'{self.horas}'
@@ -257,8 +258,8 @@ class login(models.Model):
 
 class Hacercitas(models.Model):
 	especialidad = models.CharField(max_length=100, null=True)
-	dia=models.CharField(null=True, max_length=100)
-	hora=models.TextField(max_length=100, default='Hora',null=True,unique=True)
+	dia=models.IntegerField(null=True)
+	hora=models.IntegerField(default=0,null=True)
 	especialista=models.CharField(max_length=100)
 
 	def __str__(self):

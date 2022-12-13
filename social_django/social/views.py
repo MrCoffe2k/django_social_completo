@@ -275,16 +275,60 @@ def registrarEspecialidades(request):
 
 
 
-def agendarCita(request):
+def agendarCitaEspecialidad(request):
 	if request.method == "POST":
-		form = CitasForm(request.POST)
+		form = CitasFormEspecialidad(request.POST)
 		if form.is_valid():
-			form.save()
-			messages.success(request, f'Cita Agendada')
-			return redirect('citas')
+			return redirect('citasEspecialista')
 	else:
-		form = CitasForm()
+		form = CitasFormEspecialidad()
 
 	context = { 'form' : form }
-	return render(request, 'social/citas.html', context)
+	return render(request, 'social/citasEspecialidad.html', context)
+
+def agendarCitaEspecialistas(request):
+	if request.method == "POST":
+		form = CitasFormEspecialista(request.POST)	
+		if form.is_valid():
+			diaAgenda = form.cleaned_data['dia']
+			horaAgenda = form.cleaned_data['hora']
+		if diaAgenda == 1 and horaAgenda == 1 and Hacercitas.objects.filter(dia = 1).exists():
+			messages.error(request,f'Fecha no disponible')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==2 and Hacercitas.objects.filter(hora = 2).exists():
+			messages.error(request,f'Fecha no disponible2')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==3 and Hacercitas.objects.filter(hora = 3).exists():
+			messages.error(request,f'Fecha no disponible3')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==4 and Hacercitas.objects.filter(hora = 4).exists():
+			messages.error(request,f'Fecha no disponible4')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==5 and Hacercitas.objects.filter(hora = 5).exists():
+			messages.error(request,f'Fecha no disponible5')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==6 and Hacercitas.objects.filter(hora = 6).exists():
+			messages.error(request,f'Fecha no disponible6')
+			print(diaAgenda)
+			return redirect('citasEspecialista')
+		elif diaAgenda == 1 and horaAgenda==7 and Hacercitas.objects.filter(hora = 7).exists():
+			messages.error(request,f'Fecha no disponible7')
+			print(diaAgenda)
+			return redirect('citasEspecialista')	
+		else:
+			messages.success(request, 'Cita agendada')
+			form.save()
+			return redirect('citasEspecialidad')
+	else:
+		form = CitasFormEspecialista()
+
+	context = { 'form' : form }
+	return render(request, 'social/citasEspecialista.html', context)
+
+
 

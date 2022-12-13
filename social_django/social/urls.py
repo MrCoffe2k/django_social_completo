@@ -37,7 +37,8 @@ urlpatterns = [
     path('resultados/', views.resultados, name='resultados'),
 	path('busquedaresultados/', views.busquedaresultados, name='busquedaresultados'),
 	path('registroEspecialidades/', views.registrarEspecialidades, name='registroEspecialidades'),
-	path('citas/', views.agendarCita, name='citas'),
+	path('citasEspecialidad/', views.agendarCitaEspecialidad, name='citasEspecialidad'),
+	path('citasEspecialista/', views.agendarCitaEspecialistas, name='citasEspecialista'),
 	path('expediente/', views.expediente, name='expediente'),
 	
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
