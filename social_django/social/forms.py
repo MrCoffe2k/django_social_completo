@@ -81,12 +81,11 @@ class StaffForm(forms.ModelForm):
 class Consulta(forms.ModelForm):
 	motivo = forms.CharField(label="Observaciones",widget=forms.Textarea(attrs={'rows':10, 'placeholder':'Observaciones'}), required=True)
 	fecha = forms.DateField(label="Fecha",widget=DatePickerInput)
-	nombre = forms.CharField(label="Nombre del paciente", max_length=100,widget=forms.Textarea(attrs={'rows':1, 'placeholder':'Nombre del paciente'}))
+	nombre = forms.ModelChoiceField(queryset=Paciente.objects.filter(is_paciente=True),label='Paciente', widget=forms.Select(attrs={'class':'choice'}))
 	peso = forms.FloatField(label="Peso",widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Peso (Kg)'}))
 	altura = forms.FloatField(label="Altura", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Altura(cm)'}))
 	edad = forms.IntegerField(label = "Edad", widget=forms.NumberInput(attrs={'rows':1, 'placeholder':'Edad'}))
-	doctor = forms.ModelChoiceField(
-    queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
+	doctor = forms.ModelChoiceField(queryset=Paciente.objects.filter(is_especialista=True),label='Doctor',widget=forms.Select(attrs={'class': 'choice'}))
 
 	class Meta:
 		model= Consultas
