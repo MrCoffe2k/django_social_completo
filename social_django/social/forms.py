@@ -164,7 +164,7 @@ class Resultadoslab(forms.ModelForm):
 		model= ResultadosLab
 		fields=['Paciente','Muestra','GlobulosRojos','GlobulosBlancos','Colesterol','Glucosa','TSH','Trigliceridos']
 		
-class Horarios(forms.ModelForm):
+class HorariosForm(forms.ModelForm):
 	DIAS = (
 		(1,'Lunes'),
 		(2,'Martes'),
